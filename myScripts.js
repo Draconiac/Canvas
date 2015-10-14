@@ -1,4 +1,6 @@
 $.getScript("externalScripts.js", function(){});
+
+//test33
 /**
  *Kullanılacak fotoğrafın ekrana getirilmesi 
  */
