@@ -7,10 +7,13 @@
 	</head>
 	<body>
 
-		<!--<audio id="m1" src="C:\Users\keremyucel.DOMAIN\Desktop\web\Notalar\A_la.wav" preload="auto"></audio>-->
-		<!--<audio id="multiaudio1" src="http://localhost/demo/Notalar/A_la.wav" preload="auto"></audio>-->
-		<audio id="multiaudio1" src="Notalar/A_la.wav" preload="auto"></audio>
-		<audio id="multiaudio2" src="Notalar/E_mi.wav" preload="auto"></audio>
+		<audio id="multiaudio1" src="Notalar/C_do.wav" preload="auto"> </audio>
+		<audio id="multiaudio2" src="Notalar/D_re.wav" preload="auto"> </audio>
+		<audio id="multiaudio3" src="Notalar/E_mi.wav" preload="auto"> </audio>
+		<audio id="multiaudio4" src="Notalar/F_fa.wav" preload="auto"> </audio>
+		<audio id="multiaudio5" src="Notalar/G_sol.wav" preload="auto"> </audio>
+		<audio id="multiaudio6" src="Notalar/A_la.wav" preload="auto"> </audio>
+		<audio id="multiaudio7" src="Notalar/B_si.wav" preload="auto"> </audio>
 
 		<input type="button" value="TEST" onclick="play_multi_sound('multiaudio1');">
 		<canvas id="example" width= "700" height="100" style="border: 1px solid #000000;">
@@ -68,13 +71,37 @@
 			}
 
 			function playSound(r, g, b) {
-				if ((r >= 12 && r <= 163) && (g >= 12 && g <= 163) && (b >= 56 && b <= 198)) {
+				//TODO Kontrol edilip tüm aralıklar hesaplanacak
+				
+				//DO
+				if ((r >= 128 && r <= 255) && (g >= 0 && g <= 128) && (b >= 0 && b <= 128)) {
 					play_multi_sound('multiaudio1');
 				}
-				if ((r >= 128 && r <= 255) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)) {
+				//RE
+				if ((r >= 128 && r <= 255) && (g >= 70 && g <= 198) && (b >= 0 && b <= 128)) {
 					play_multi_sound('multiaudio2');
 				}
-
+				//Mİ
+				if ((r >= 128 && r <= 255) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)){
+					play_multi_sound('multiaudio3');
+				}
+				//FA
+				if ((r >= 77 && r <= 204) && (g >= 102 && g <= 230) && (b >= 25 && b <= 152)) {
+					play_multi_sound('multiaudio4');
+				}
+				//SOL
+				if ((r >= 23 && r <= 150) && (g >= 70 && g <= 197) && (b >= 44 && b <= 171)) {
+					play_multi_sound('multiaudio5');
+				}
+				//LA
+				if ((r >= 12 && r <= 163) && (g >= 12 && g <= 163) && (b >= 56 && b <= 198)){
+					play_multi_sound('multiaudio6');
+				}
+				//Sİ
+				if ((r >= 51 && r <= 178) && (g >= 26 && g <= 153) && (b >= 76 && b <= 204)){
+					play_multi_sound('multiaudio7');
+				}
+				
 			}
 
 			function findPos(obj) {
