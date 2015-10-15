@@ -15,13 +15,16 @@
 		<audio id="multiaudio6" src="Notalar/A_la.wav" preload="auto">la</audio>
 		<audio id="multiaudio7" src="Notalar/B_si.wav" preload="auto">si</audio>
 
-		<input type="button" value="TEST" onclick="play_multi_sound('multiaudio1');">
+		
 		<canvas id="mainCanvas" width= "700" height="100" style="border: 1px solid #000000;">
 			canvas
 		</canvas>
 		<canvas id="miniCanvas" width= "700" height="100" style="border: 1px solid #000000;">
 			mini_canvas
 		</canvas>
+		<br />
+		<input type="button" value="TEST" onclick="play_multi_sound('multiaudio1');">
+		<input id="calculate" type="button" value="Calculate" onclick="findPixelSummations();">
 		<div id="coord">
 			Koordinat ve Renk
 		</div>
