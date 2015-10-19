@@ -148,8 +148,14 @@ function findPixelRanges (pixelCalculationArray, x, y){
 	info = x + "x" + y + " square's pixel average values";
 	$('#result_1').html(info + "<br>" +"RGB :" + red_Total + ", " + green_Total + ", " + blue_Total);
 	
-	playSound(red_Total, green_Total, blue_Total);
-	//ARALIKLARDA SORUN VAR
+	
+	var millisecondsToWait = 300;
+	setTimeout(function() {
+		playSound(red_Total, green_Total, blue_Total);
+		//ARALIKLARDA SORUN VAR
+	}, millisecondsToWait); 
+
+	
 }
 
 function findPixelSummations (){
@@ -164,26 +170,28 @@ function findPixelSummations (){
 		y_border = mainCanvas.height /y2;
 		
 	//x border degil y border olacak
-	while (x_border > 1) {
+	while (y_border > 0) {
 		pixelCalculationArray = [];
+		
+		//burdaki for lar sadece x2 ye y2 büyüklüğündeki bir parçayı hesaplıyor
 		for (var i = 0; i < x2; i++) {
 			for (var j = 0; j < y2; j++) {
 				pixelProperties = c.getImageData(x1, y1, 1, 1).data;
 				pixelCalculationArray.push(pixelProperties);
-				x1++;				
+				y1++;				
 			};
-			//y1 += i;			
-			x1 -= x2;
+			y1 = y1-y2;
 		};
-		//yeni x ve y değerleri;
-		x1 = x1 + x2;
 		
-		if(mainCanvas.width / x1 == 2){
+		x1 = x1 + x2;
+		if(x1 + x2 == mainCanvas.width){
+			x1 = 0;
 			y1 = y1 + y2;
+			y_border--;
 		}
 		
 		findPixelRanges(pixelCalculationArray, x2, y2);
-		x_border--;
+		
 	}
 	
 	$('#result_1').html("x1 :" + x1 + " y1 :" + y1 );
