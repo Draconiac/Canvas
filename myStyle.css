@@ -1,0 +1,5 @@
+.progressjs-theme-blue{
+	height: 2px;
+	transition: all 0.3s ease-out;
+	background-color: #3498DB;
+}

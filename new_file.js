@@ -124,13 +124,16 @@ function rgbToHex(r, g, b) {
  * 1/4lük çeyreği sarı çalsın.
  */
 //x,y karenin boyutu x*y
-//Neden x*x değil çünkü dikdörtgen de olsun istiyorum bütün x leri y olaral
+//Neden x*x değil çünkü dikdörtgen de olsun istiyorum bütün x leri y olarak
 //değiştirmek istemedim.
+var percentage = 0;// progress bar için
+var noteSquence = [];
 function findPixelRanges (pixelCalculationArray, x, y){
 	var red_Total = 0;
 		green_Total = 0;
 		blue_Total = 0;
 	var info;
+	var dump =[];
 	
 	//Tüm arrayin içindeki rgb değerlerinin toplamları	
 	for (var i = 0; i < pixelCalculationArray.length ; i++) {
@@ -140,29 +143,48 @@ function findPixelRanges (pixelCalculationArray, x, y){
 		blue_Total += pixelCalculationArray[i][2];
 	};
 
-	red_Total = red_Total / pixelCalculationArray.length;
-	green_Total = green_Total / pixelCalculationArray.length;
-	blue_Total = blue_Total / pixelCalculationArray.length;
+	dump.push(red_Total = red_Total / pixelCalculationArray.length);
+	dump.push(green_Total = green_Total / pixelCalculationArray.length);
+	dump.push(blue_Total = blue_Total / pixelCalculationArray.length);
+	
+	noteSquence.push(dump);
 	
 	//Ekrana bilgi yazdır.
 	info = x + "x" + y + " square's pixel average values";
 	$('#result_1').html(info + "<br>" +"RGB :" + red_Total + ", " + green_Total + ", " + blue_Total);
 	
-	
-	var millisecondsToWait = 300;
+	//playSound(red_Total, green_Total, blue_Total);
+	/*var millisecondsToWait = 300;
 	setTimeout(function() {
 		playSound(red_Total, green_Total, blue_Total);
 		//ARALIKLARDA SORUN VAR
-	}, millisecondsToWait); 
+	}, millisecondsToWait); */
 
-	
+	//progressBar(x,y);
 }
 
+/*
+function progressBar (x, y){
+	
+	var progressBar = document.getElementById('progressBar');
+	var	progressStatus = document.getElementById('progressStatus');
+	
+	var	a = mainCanvas.height / x;
+	var	b = mainCanvas.width / y;	
+	var	multiplier = 100/(a+b);
+		
+		percentage+=multiplier;
+		progressStatus.innerHTML =  percentage+"%";
+		progressBar.value = percentage;
+	
+}
+*/
+	
 function findPixelSummations (){
 	var x1 = 0;
 		y1 = 0;
-		x2 = 20; //otomatik alınacak
-		y2 = 20;		
+		x2 = 40; //otomatik alınacak
+		y2 = 40;		
 		pixelCalculationArray = [];
 		c = mainCanvas.getContext('2d');
 		//pixelProperties = c.getImageData(x1, y1, 1, 1).data;
@@ -193,7 +215,7 @@ function findPixelSummations (){
 		findPixelRanges(pixelCalculationArray, x2, y2);
 		
 	}
-	
+	//percentage = 0;
 	$('#result_1').html("x1 :" + x1 + " y1 :" + y1 );
 	
 	/*	
