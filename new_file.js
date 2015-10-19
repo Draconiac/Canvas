@@ -2,8 +2,6 @@
  * @author keremyucel
  */
 
-
-
 var mainCanvas = document.getElementById('mainCanvas');
 var miniCanvas = document.getElementById('miniCanvas');
 var context = mainCanvas.getContext('2d');
@@ -53,30 +51,37 @@ function playSound(r, g, b) {
 	//DO
 	if ((r >= 128 && r <= 255) && (g >= 0 && g <= 128) && (b >= 0 && b <= 128)) {
 		play_multi_sound('multiaudio1');
+		$('#nota').html("--- DO ---");
 	}
 	//RE
 	if ((r >= 128 && r <= 255) && (g >= 70 && g <= 198) && (b >= 0 && b <= 128)) {
 		play_multi_sound('multiaudio2');
+		$('#nota').html("--- RE ---");
 	}
 	//Mİ
 	if ((r >= 128 && r <= 255) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)) {
 		play_multi_sound('multiaudio3');
+		$('#nota').html("--- Mİ ---");
 	}
 	//FA
 	if ((r >= 77 && r <= 204) && (g >= 102 && g <= 230) && (b >= 25 && b <= 152)) {
 		play_multi_sound('multiaudio4');
+		$('#nota').html("--- FA ---");
 	}
 	//SOL
 	if ((r >= 23 && r <= 150) && (g >= 70 && g <= 197) && (b >= 44 && b <= 171)) {
 		play_multi_sound('multiaudio5');
+		$('#nota').html("--- SOL ---");
 	}
 	//LA
 	if ((r >= 12 && r <= 163) && (g >= 12 && g <= 163) && (b >= 56 && b <= 198)) {
 		play_multi_sound('multiaudio6');
+		$('#nota').html("--- LA ---");
 	}
 	//Sİ
 	if ((r >= 51 && r <= 178) && (g >= 26 && g <= 153) && (b >= 76 && b <= 204)) {
 		play_multi_sound('multiaudio7');
+		$('#nota').html("--- Sİ ---");
 	}
 
 }
@@ -103,17 +108,91 @@ function rgbToHex(r, g, b) {
 	return ((r << 16) | (g << 8) | b).toString(16);
 }
 
+/**
+ * 1.Gelen pixellerin sadece ortalamasını al çıkan sonucu çal.
+ * E = Epsilon
+ * E(red)/array.size,E(green)/array.size,E(blue)/array.size 
+ * 
+ * (Üst madde bitmeden deneme)
+ * 2.Gelen arraydeki renk kodlarını aralıklara göre sınıflandır.
+ * Hangi renkten kaçar tane olduklarına bak, aynı anda 2 veya 3 nota çalınabilirmi dene.
+ *
+ * (Üst madde bitmeden deneme)
+ * 3.Bulunan renklerin oranlarına göre notanın çalma süresini uzatılıp kısaltılabilirmi?
+ * 400lük array de, 300 kırmızı 100 sarı varsa;
+ * 3/4lük bir buruşun 4/4lük tam notasını kırmızı
+ * 1/4lük çeyreği sarı çalsın.
+ */
+//x,y karenin boyutu x*y
+//Neden x*x değil çünkü dikdörtgen de olsun istiyorum bütün x leri y olaral
+//değiştirmek istemedim.
+function findPixelRanges (pixelCalculationArray, x, y){
+	var red_Total = 0;
+		green_Total = 0;
+		blue_Total = 0;
+	var info;
+	
+	//Tüm arrayin içindeki rgb değerlerinin toplamları	
+	for (var i = 0; i < pixelCalculationArray.length ; i++) {
+		
+		red_Total += pixelCalculationArray[i][0];
+		green_Total += pixelCalculationArray[i][1];
+		blue_Total += pixelCalculationArray[i][2];
+	};
+
+	red_Total = red_Total / pixelCalculationArray.length;
+	green_Total = green_Total / pixelCalculationArray.length;
+	blue_Total = blue_Total / pixelCalculationArray.length;
+	
+	//Ekrana bilgi yazdır.
+	info = x + "x" + y + " square's pixel average values";
+	$('#result_1').html(info + "<br>" +"RGB :" + red_Total + ", " + green_Total + ", " + blue_Total);
+	
+	playSound(red_Total, green_Total, blue_Total);
+	//ARALIKLARDA SORUN VAR
+}
+
 function findPixelSummations (){
-	var x1 = 242;
-		y1 = 61;
+	var x1 = 0;
+		y1 = 0;
 		x2 = 20; //otomatik alınacak
 		y2 = 20;		
-		pixelCalculationArray = [x2*y2];
+		pixelCalculationArray = [];
 		c = mainCanvas.getContext('2d');
-		p = c.getImageData(x1, y1, 1, 1).data;
+		//pixelProperties = c.getImageData(x1, y1, 1, 1).data;
+	var x_border = mainCanvas.width / x2;
+		y_border = mainCanvas.height /y2;
 		
-	playSound(p[0], p[1], p[2]);
+	//x border degil y border olacak
+	while (x_border > 1) {
+		pixelCalculationArray = [];
+		for (var i = 0; i < x2; i++) {
+			for (var j = 0; j < y2; j++) {
+				pixelProperties = c.getImageData(x1, y1, 1, 1).data;
+				pixelCalculationArray.push(pixelProperties);
+				x1++;				
+			};
+			//y1 += i;			
+			x1 -= x2;
+		};
+		//yeni x ve y değerleri;
+		x1 = x1 + x2;
 		
+		if(mainCanvas.width / x1 == 2){
+			y1 = y1 + y2;
+		}
+		
+		findPixelRanges(pixelCalculationArray, x2, y2);
+		x_border--;
+	}
+	
+	$('#result_1').html("x1 :" + x1 + " y1 :" + y1 );
+	
+	/*	
+	playSound(pixelProperties[0],
+		 pixelProperties[1],
+		 pixelProperties[2]);
+	*/	
 		
 }
 
