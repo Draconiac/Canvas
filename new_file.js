@@ -2,9 +2,11 @@
  * @author keremyucel
  */
 
-var canvas_1 = document.getElementById('mainCanvas');
+
+
+var mainCanvas = document.getElementById('mainCanvas');
 var miniCanvas = document.getElementById('miniCanvas');
-var context = canvas_1.getContext('2d');
+var context = mainCanvas.getContext('2d');
 
 function make_base() {
 	base_image = new Image();
@@ -12,10 +14,10 @@ function make_base() {
 
 	base_image.crossOrigin = 'Anonymous';
 	base_image.onload = (function() {
-		canvas_1.height = canvas_1.width * (base_image.height / base_image.width);
-		canvas_1.width = base_image.width * 0.5;
-		canvas_1.height = base_image.height * 0.5;
-		context.drawImage(base_image, 0, 0, canvas_1.width, canvas_1.height);
+		mainCanvas.height = mainCanvas.width * (base_image.height / base_image.width);
+		mainCanvas.width = base_image.width * 0.5;
+		mainCanvas.height = base_image.height * 0.5;
+		context.drawImage(base_image, 0, 0, mainCanvas.width, mainCanvas.height);
 
 	});
 }
@@ -101,7 +103,19 @@ function rgbToHex(r, g, b) {
 	return ((r << 16) | (g << 8) | b).toString(16);
 }
 
-
+function findPixelSummations (){
+	var x1 = 242;
+		y1 = 61;
+		x2 = 20; //otomatik alınacak
+		y2 = 20;		
+		pixelCalculationArray = [x2*y2];
+		c = mainCanvas.getContext('2d');
+		p = c.getImageData(x1, y1, 1, 1).data;
+		
+	playSound(p[0], p[1], p[2]);
+		
+		
+}
 
 $('#mainCanvas').mousemove(function(e) {
 	var pos = findPos(this);
