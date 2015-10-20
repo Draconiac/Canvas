@@ -2,6 +2,8 @@
  * @author keremyucel
  */
 
+//importScripts('jquery-2.1.4.js', 'worker.js');
+
 var mainCanvas = document.getElementById('mainCanvas');
 var miniCanvas = document.getElementById('miniCanvas');
 var context = mainCanvas.getContext('2d');
@@ -179,7 +181,19 @@ function progressBar (x, y){
 	
 }
 */
+
+
+function testWorker (){
+	var worker = new Worker('worker.js');
+	var info = "TEST";
+	worker.postMessage(info);
+	worker.onmessage = (function (event){
+		
+		alert(event.data + "D!!!e");	
+	});
 	
+}
+/*	
 function findPixelSummations (){
 	var x1 = 0;
 		y1 = 0;
@@ -187,15 +201,11 @@ function findPixelSummations (){
 		y2 = 40;		
 		pixelCalculationArray = [];
 		c = mainCanvas.getContext('2d');
-		//pixelProperties = c.getImageData(x1, y1, 1, 1).data;
 	var x_border = mainCanvas.width / x2;
 		y_border = mainCanvas.height /y2;
-		
-	//x border degil y border olacak
+
 	while (y_border > 0) {
 		pixelCalculationArray = [];
-		
-		//burdaki for lar sadece x2 ye y2 büyüklüğündeki bir parçayı hesaplıyor
 		for (var i = 0; i < x2; i++) {
 			for (var j = 0; j < y2; j++) {
 				pixelProperties = c.getImageData(x1, y1, 1, 1).data;
@@ -204,28 +214,19 @@ function findPixelSummations (){
 			};
 			y1 = y1-y2;
 		};
-		
+
 		x1 = x1 + x2;
-		if(x1 + x2 == mainCanvas.width){
+		if(x1 + x2 == mainCanvas.width || x1 + x2 > mainCanvas.width ){
 			x1 = 0;
 			y1 = y1 + y2;
 			y_border--;
 		}
-		
-		findPixelRanges(pixelCalculationArray, x2, y2);
-		
-	}
-	//percentage = 0;
-	$('#result_1').html("x1 :" + x1 + " y1 :" + y1 );
-	
-	/*	
-	playSound(pixelProperties[0],
-		 pixelProperties[1],
-		 pixelProperties[2]);
-	*/	
-		
-}
+		findPixelRanges(pixelCalculationArray, x2, y2);		
+	}//en of while
 
+	$('#result_1').html("x1 :" + x1 + " y1 :" + y1 );
+}
+*/
 $('#mainCanvas').mousemove(function(e) {
 	var pos = findPos(this);
 	var x = e.pageX - pos.x;
