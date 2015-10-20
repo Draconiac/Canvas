@@ -6,6 +6,7 @@ var mainCanvas = document.getElementById('mainCanvas');
 var miniCanvas = document.getElementById('miniCanvas');
 var context = mainCanvas.getContext('2d');
 
+
 function make_base() {
 	base_image = new Image();
 	base_image.src = "ABC.jpg";
@@ -46,7 +47,7 @@ function play_multi_sound(s) {
 }
 
 function playSound(r, g, b) {
-	//TODO Kontrol edilip tüm aralıklar hesaplanacak
+	//TODO Kontrol edilip tÃ¼m aralÄ±klar hesaplanacak
 
 	//DO
 	if ((r >= 128 && r <= 255) && (g >= 0 && g <= 128) && (b >= 0 && b <= 128)) {
@@ -58,10 +59,10 @@ function playSound(r, g, b) {
 		play_multi_sound('multiaudio2');
 		$('#nota').html("--- RE ---");
 	}
-	//Mİ
+	//MÄ°
 	if ((r >= 128 && r <= 255) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)) {
 		play_multi_sound('multiaudio3');
-		$('#nota').html("--- Mİ ---");
+		$('#nota').html("--- MÄ° ---");
 	}
 	//FA
 	if ((r >= 77 && r <= 204) && (g >= 102 && g <= 230) && (b >= 25 && b <= 152)) {
@@ -78,10 +79,10 @@ function playSound(r, g, b) {
 		play_multi_sound('multiaudio6');
 		$('#nota').html("--- LA ---");
 	}
-	//Sİ
+	//SÄ°
 	if ((r >= 51 && r <= 178) && (g >= 26 && g <= 153) && (b >= 76 && b <= 204)) {
 		play_multi_sound('multiaudio7');
-		$('#nota').html("--- Sİ ---");
+		$('#nota').html("--- SÄ° ---");
 	}
 
 }
@@ -109,24 +110,24 @@ function rgbToHex(r, g, b) {
 }
 
 /**
- * 1.Gelen pixellerin sadece ortalamasını al çıkan sonucu çal.
+ * 1.Gelen pixellerin sadece ortalamasÄ±nÄ± al Ã§Ä±kan sonucu Ã§al.
  * E = Epsilon
  * E(red)/array.size,E(green)/array.size,E(blue)/array.size 
  * 
- * (Üst madde bitmeden deneme)
- * 2.Gelen arraydeki renk kodlarını aralıklara göre sınıflandır.
- * Hangi renkten kaçar tane olduklarına bak, aynı anda 2 veya 3 nota çalınabilirmi dene.
+ * (Ãœst madde bitmeden deneme)
+ * 2.Gelen arraydeki renk kodlarÄ±nÄ± aralÄ±klara gÃ¶re sÄ±nÄ±flandÄ±r.
+ * Hangi renkten kaÃ§ar tane olduklarÄ±na bak, aynÄ± anda 2 veya 3 nota Ã§alÄ±nabilirmi dene.
  *
- * (Üst madde bitmeden deneme)
- * 3.Bulunan renklerin oranlarına göre notanın çalma süresini uzatılıp kısaltılabilirmi?
- * 400lük array de, 300 kırmızı 100 sarı varsa;
- * 3/4lük bir buruşun 4/4lük tam notasını kırmızı
- * 1/4lük çeyreği sarı çalsın.
+ * (Ãœst madde bitmeden deneme)
+ * 3.Bulunan renklerin oranlarÄ±na gÃ¶re notanÄ±n Ã§alma sÃ¼resini uzatÄ±lÄ±p kÄ±saltÄ±labilirmi?
+ * 400lÃ¼k array de, 300 kÄ±rmÄ±zÄ± 100 sarÄ± varsa;
+ * 3/4lÃ¼k bir buruÅŸun 4/4lÃ¼k tam notasÄ±nÄ± kÄ±rmÄ±zÄ±
+ * 1/4lÃ¼k Ã§eyreÄŸi sarÄ± Ã§alsÄ±n.
  */
 //x,y karenin boyutu x*y
-//Neden x*x değil çünkü dikdörtgen de olsun istiyorum bütün x leri y olarak
-//değiştirmek istemedim.
-var percentage = 0;// progress bar için
+//Neden x*x deÄŸil Ã§Ã¼nkÃ¼ dikdÃ¶rtgen de olsun istiyorum bÃ¼tÃ¼n x leri y olarak
+//deÄŸiÅŸtirmek istemedim.
+var percentage = 0;// progress bar iÃ§in
 var noteSquence = [];
 function findPixelRanges (pixelCalculationArray, x, y){
 	var red_Total = 0;
@@ -135,7 +136,7 @@ function findPixelRanges (pixelCalculationArray, x, y){
 	var info;
 	var dump =[];
 	
-	//Tüm arrayin içindeki rgb değerlerinin toplamları	
+	//TÃ¼m arrayin iÃ§indeki rgb deÄŸerlerinin toplamlarÄ±	
 	for (var i = 0; i < pixelCalculationArray.length ; i++) {
 		
 		red_Total += pixelCalculationArray[i][0];
@@ -149,7 +150,7 @@ function findPixelRanges (pixelCalculationArray, x, y){
 	
 	noteSquence.push(dump);
 	
-	//Ekrana bilgi yazdır.
+	//Ekrana bilgi yazdÄ±r.
 	info = x + "x" + y + " square's pixel average values";
 	$('#result_1').html(info + "<br>" +"RGB :" + red_Total + ", " + green_Total + ", " + blue_Total);
 	
@@ -183,7 +184,7 @@ function progressBar (x, y){
 function findPixelSummations (){
 	var x1 = 0;
 		y1 = 0;
-		x2 = 40; //otomatik alınacak
+		x2 = 40; //otomatik alÄ±nacak
 		y2 = 40;		
 		pixelCalculationArray = [];
 		c = mainCanvas.getContext('2d');
@@ -195,7 +196,7 @@ function findPixelSummations (){
 	while (y_border > 0) {
 		pixelCalculationArray = [];
 		
-		//burdaki for lar sadece x2 ye y2 büyüklüğündeki bir parçayı hesaplıyor
+		//burdaki for lar sadece x2 ye y2 bÃ¼yÃ¼klÃ¼ÄŸÃ¼ndeki bir parÃ§ayÄ± hesaplÄ±yor
 		for (var i = 0; i < x2; i++) {
 			for (var j = 0; j < y2; j++) {
 				pixelProperties = c.getImageData(x1, y1, 1, 1).data;
