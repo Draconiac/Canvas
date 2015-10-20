@@ -1,5 +1,15 @@
-//function findPixelSummations (){
-onmessage = (function(event){
+/*
+self.addEventListener('message', function(e){
+	self.postMessage(e.data);
+}, false);
+*/
+
+
+
+self.addEventListener('message', function(event){
+	//postMessage(event.data + "DONE");
+	
+	$('#result_1').html("x1 :" + x1 + " y1 :" + y1 ); 
 	var x1 = 0;
 		y1 = 0;
 		x2 = 40; //otomatik alınacak
@@ -30,6 +40,6 @@ onmessage = (function(event){
 	}//en of while
 		
 	$('#result_1').html("x1 :" + x1 + " y1 :" + y1 ); 
-	postMessage(event.data + "DONE");
+	self.postMessage(event.data + "DONE");
 	
-});
+}, false);

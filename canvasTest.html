@@ -18,9 +18,9 @@
 		<!--<canvas id="miniCanvas" width= "700" height="100" style="border: 1px solid #000000;">mini_canvas</canvas>-->
 		<br />
 		<input type="button" value="TEST" onclick="play_multi_sound('multiaudio1');">
-		<input id="calculate" type="button" value="Calculate" onclick="testWorker();">
+		<input id="calculate" type="button" value="Calculate" onclick="findPixelSummations();">
 		<progress id="progressBar" value="0" max="100"> </progress>
-		<span id="progressStatus"></span>
+		<span id="progressStatus"> </span>
 		<h1 id="finalMessage"> </h1>
 		
 		
@@ -31,11 +31,11 @@
 
 		<script type="text/javascript" src="jquery-2.1.4.js"></script>
 		<script type="text/javascript" src="new_file.js"></script>
-		<script type="text/javascript" src="progress.js-0.1.0/src/progress.js"></script>
+		<script type="text/javascript" src="worker.js"></script>
 		<script type="text/javascript">
-			
-			make_base();
-			
+					
+			make_base();			
+
 		</script>
 	</body>
 </html>

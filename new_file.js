@@ -156,44 +156,10 @@ function findPixelRanges (pixelCalculationArray, x, y){
 	$('#result_1').html(info + "<br>" +"RGB :" + red_Total + ", " + green_Total + ", " + blue_Total);
 	
 	//playSound(red_Total, green_Total, blue_Total);
-	/*var millisecondsToWait = 300;
-	setTimeout(function() {
-		playSound(red_Total, green_Total, blue_Total);
-		//ARALIKLARDA SORUN VAR
-	}, millisecondsToWait); */
-
-	//progressBar(x,y);
-}
-
-/*
-function progressBar (x, y){
-	
-	var progressBar = document.getElementById('progressBar');
-	var	progressStatus = document.getElementById('progressStatus');
-	
-	var	a = mainCanvas.height / x;
-	var	b = mainCanvas.width / y;	
-	var	multiplier = 100/(a+b);
-		
-		percentage+=multiplier;
-		progressStatus.innerHTML =  percentage+"%";
-		progressBar.value = percentage;
 	
 }
-*/
 
 
-function testWorker (){
-	var worker = new Worker('worker.js');
-	var info = "TEST";
-	worker.postMessage(info);
-	worker.onmessage = (function (event){
-		
-		alert(event.data + "D!!!e");	
-	});
-	
-}
-/*	
 function findPixelSummations (){
 	var x1 = 0;
 		y1 = 0;
@@ -226,7 +192,7 @@ function findPixelSummations (){
 
 	$('#result_1').html("x1 :" + x1 + " y1 :" + y1 );
 }
-*/
+
 $('#mainCanvas').mousemove(function(e) {
 	var pos = findPos(this);
 	var x = e.pageX - pos.x;
