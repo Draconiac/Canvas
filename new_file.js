@@ -169,7 +169,7 @@ function findPixelSummations (){
 		c = mainCanvas.getContext('2d');
 	var x_border = mainCanvas.width / x2;
 		y_border = mainCanvas.height /y2;
-	var partOfAnImage;
+	
 
 		
 	//Web worker desteği varmı ?
@@ -179,13 +179,17 @@ function findPixelSummations (){
 			myWorker = new Worker("worker.js");
 		}
 		
-		myWorker.postMessage([x1, x2]);
+		//c yi gönderince saçmaladı
+		// canvasın kendini yollayamadım ama parçalı şekilde gidebiliyor getImage datayı alınca;
+		var rea = c.getImageData(x1, y1, 2, 2).data;
+		myWorker.postMessage(['Doğru yoldamıyım', rea]);
 		
 		
 		//workerdan dönen sonuç
-		myWorker.onmessage = function(event){
+		myWorker.onmessage = function(e){
 			//document.getElementById("result").innerHTML = event.data;
-			$('#textArea').html(event.data);
+			window.alert(e.data);
+			$('#textArea').html(e.data);
 			
 			//findPixelRanges(pixelCalculationArray, x2, y2);
 		};

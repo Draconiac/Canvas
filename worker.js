@@ -2,7 +2,12 @@
 onmessage = function(e){
 //data[0],data[1],data[2],data[3],data[4],data[5] verilerin alınması		
 //e.data olabilir bunlar
-	
+	if(e.data[1] !== null)
+		var aaa = 'EVET DOGRU ' +e.data[0] + e.data[1];
+	else
+		var aaa = 'EVET DOGRU ' +e.data[0] + ' GELMEDİ OLMADI';
+		
+	postMessage(aaa);
 	var c = e.data[0];
 		x1 = data[1];
 		y1 = data[2];
