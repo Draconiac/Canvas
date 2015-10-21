@@ -2,11 +2,10 @@
  * @author keremyucel
  */
 
-//importScripts('jquery-2.1.4.js', 'worker.js');
-
 var mainCanvas = document.getElementById('mainCanvas');
 var miniCanvas = document.getElementById('miniCanvas');
 var context = mainCanvas.getContext('2d');
+
 
 function make_base() {
 	base_image = new Image();
