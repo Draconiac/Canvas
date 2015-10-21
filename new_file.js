@@ -154,11 +154,61 @@ function findPixelRanges (pixelCalculationArray, x, y){
 	info = x + "x" + y + " square's pixel average values";
 	$('#result_1').html(info + "<br>" +"RGB :" + red_Total + ", " + green_Total + ", " + blue_Total);
 	
-	//playSound(red_Total, green_Total, blue_Total);
-	
+	//playSound(red_Total, green_Total, blue_Total);	
 }
 
+//worker denemesi için
+var myWorker;
+function findPixelSummations (){
+	
+	var x1 = 0;
+		y1 = 0;
+		x2 = 40; //otomatik alınacak
+		y2 = 40;		
+		pixelCalculationArray = [];
+		c = mainCanvas.getContext('2d');
+	var x_border = mainCanvas.width / x2;
+		y_border = mainCanvas.height /y2;
+	var partOfAnImage;
 
+		
+	//Web worker desteği varmı ?
+	if(typeof(Worker) !== "undefined"){
+		//worker tanımlı değilse worker oluştur
+		if(typeof(myWorker) == "undefined"){
+			myWorker = new Worker("worker.js");
+		}
+		
+		myWorker.postMessage([x1, x2]);
+		
+		
+		//workerdan dönen sonuç
+		myWorker.onmessage = function(event){
+			//document.getElementById("result").innerHTML = event.data;
+			$('#textArea').html(event.data);
+			
+			//findPixelRanges(pixelCalculationArray, x2, y2);
+		};
+		
+		
+		//worker a gönderilecek olan parametreler vs...
+		//ex: postMessage([firstData, secondData])
+		
+		//myWorker.postMessage([c, x1, y1, x2, y2, y_border, mainCanvas.width]);
+		var a = 0;
+	}else{
+		window.alert("Browser'ın Web worker desteği yoktur.");
+	}
+	
+	/* Bunu SİLME
+	//terminate worker
+	w.terminate(); 
+	//make it undefined
+    w = undefined;
+    */
+	
+}
+/*
 function findPixelSummations (){
 	var x1 = 0;
 		y1 = 0;
@@ -168,11 +218,15 @@ function findPixelSummations (){
 		c = mainCanvas.getContext('2d');
 	var x_border = mainCanvas.width / x2;
 		y_border = mainCanvas.height /y2;
+	var partOfAnImage;
 
 	while (y_border > 0) {
 		pixelCalculationArray = [];
+		//partOfAnImage = c.getImageData(x1, y1, x2, y2).data;
+		
 		for (var i = 0; i < x2; i++) {
 			for (var j = 0; j < y2; j++) {
+				//pixelProperties = partOfAnImage.getImageData(x1, y1, 1, 1).data;
 				pixelProperties = c.getImageData(x1, y1, 1, 1).data;
 				pixelCalculationArray.push(pixelProperties);
 				y1++;				
@@ -186,12 +240,13 @@ function findPixelSummations (){
 			y1 = y1 + y2;
 			y_border--;
 		}
-		findPixelRanges(pixelCalculationArray, x2, y2);		
-	}//en of while
-
+		findPixelRanges(pixelCalculationArray, x2, y2);
+			
+		$('#textArea').html("Part " + ((x1/i)) + " Over");	
+	}//end of while
 	$('#result_1').html("x1 :" + x1 + " y1 :" + y1 );
 }
-
+*/
 $('#mainCanvas').mousemove(function(e) {
 	var pos = findPos(this);
 	var x = e.pageX - pos.x;
