@@ -163,13 +163,13 @@ function findPixelSummations (){
 	
 	var x1 = 0;
 		y1 = 0;
-		x2 = 40; //otomatik alınacak
-		y2 = 40;		
+		x2 = 2; //otomatik alınacak
+		y2 = 2;		
 		pixelCalculationArray = [];
 		c = mainCanvas.getContext('2d');
 	var x_border = mainCanvas.width / x2;
 		y_border = mainCanvas.height /y2;
-	
+	var workerArray;
 
 		
 	//Web worker desteği varmı ?
@@ -178,21 +178,25 @@ function findPixelSummations (){
 		if(typeof(myWorker) == "undefined"){
 			myWorker = new Worker("worker.js");
 		}
-		
-		//c yi gönderince saçmaladı
-		// canvasın kendini yollayamadım ama parçalı şekilde gidebiliyor getImage datayı alınca;
-		var rea = c.getImageData(x1, y1, 2, 2).data;
-		myWorker.postMessage(['Doğru yoldamıyım', rea]);
-		
+				
 		
 		//workerdan dönen sonuç
 		myWorker.onmessage = function(e){
 			//document.getElementById("result").innerHTML = event.data;
-			window.alert(e.data);
-			$('#textArea').html(e.data);
+			//window.alert(e.data);
+			//$('#textArea').html(e.data).append();
+			$('#textArea').val($('#textArea').val() + e.data);
 			
 			//findPixelRanges(pixelCalculationArray, x2, y2);
 		};
+		
+		//c yi gönderince saçmaladı
+		// canvasın kendini yollayamadım ama parçalı şekilde gidebiliyor getImage datayı alınca;
+		workerArray = c.getImageData(x1, y1, 40, 40).data;
+		
+		myWorker.postMessage([workerArray, x1, y1, x2, y2, y_border, mainCanvas.width]);
+		var dwqwdq;
+		//myWorker.postMessage(['Doğru yoldamıyım', rea]);
 		
 		
 		//worker a gönderilecek olan parametreler vs...
