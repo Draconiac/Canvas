@@ -12,38 +12,48 @@
     </head>
     <body>
 
-        <audio id="multiaudio1" src="Notalar/C_do.wav" preload="auto"> </audio>
-        <audio id="multiaudio2" src="Notalar/D_re.wav" preload="auto"> </audio>
-        <audio id="multiaudio3" src="Notalar/E_mi.wav" preload="auto"> </audio>
-        <audio id="multiaudio4" src="Notalar/F_fa.wav" preload="auto"> </audio>
-        <audio id="multiaudio5" src="Notalar/G_sol.wav" preload="auto"> </audio>
-        <audio id="multiaudio6" src="Notalar/A_la.wav" preload="auto"> </audio>
-        <audio id="multiaudio7" src="Notalar/B_si.wav" preload="auto"> </audio>
+        <audio id="multiaudio1" src="Notalar/C_do.wav" preload="auto"></audio>
+        <audio id="multiaudio2" src="Notalar/D_re.wav" preload="auto"></audio>
+        <audio id="multiaudio3" src="Notalar/E_mi.wav" preload="auto"></audio>
+        <audio id="multiaudio4" src="Notalar/F_fa.wav" preload="auto"></audio>
+        <audio id="multiaudio5" src="Notalar/G_sol.wav" preload="auto"></audio>
+        <audio id="multiaudio6" src="Notalar/A_la.wav" preload="auto"></audio>
+        <audio id="multiaudio7" src="Notalar/B_si.wav" preload="auto"></audio>
 
         <div id="nav">
             <ul>
-                <li><a href="index.html">Homepage</a></li>
-                <li><a href="about.html" target="_blank">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <a href="index.html">Homepage</a>
+                </li>
+                <li>
+                    <a href="about.html" target="_blank">About</a>
+                </li>
+                <li>
+                    <a href="contact.html">Contact</a>
+                </li>
             </ul>
         </div>
 
-        <div id="container">            
-            <div><canvas id="mainCanvas" width= "700" height="100" style="border: 1px solid #000000;">canvas</canvas>
-            <textarea id="textArea" rows="20" cols="30"> </textarea></div>           
+        <div id="container">
+            <div>
+                <canvas id="mainCanvas" width= "700" height="100" style="border: 1px solid #000000;">
+                    canvas
+                </canvas>
+                <textarea id="textArea" rows="20" cols="30"> </textarea>
+            </div>
         </div>
-        
+
         <br />
         <input type="button" value="TEST" onclick="play_multi_sound('multiaudio1');">
         <input id="calculate" type="button" value="Calculate" onclick="findPixelSummations();">
 
-        <div id="test1"> </div>
-        <div id="result_1"> </div>
-        <div id="nota"> </div>
+        <div id="test1"></div>
+        <div id="result_1"></div>
+        <div id="nota"></div>
         <div id="coord">
             Koordinat ve Renk
         </div>
-        <div id="status"> </div>
+        <div id="status"></div>
 
         <script type="text/javascript" src="jquery-2.1.4.js"></script>
         <script type="text/javascript" src="new_file.js"></script>

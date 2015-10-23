@@ -1,11 +1,11 @@
 /**
  * @author keremyucel
  */
-
+$(document).ready(function() {
+});
 var mainCanvas = document.getElementById('mainCanvas');
 var miniCanvas = document.getElementById('miniCanvas');
 var context = mainCanvas.getContext('2d');
-
 
 function make_base() {
 	base_image = new Image();
@@ -30,7 +30,7 @@ for ( a = 0; a < channel_max; a++) {
 	// create a new audio object
 	audiochannels[a]['channel'] = new Audio();
 	// expected end time for this channel
-	audiochannels[a]['finished'] = -1;	
+	audiochannels[a]['finished'] = -1;
 }
 
 function play_multi_sound(s) {
@@ -86,7 +86,7 @@ function playSound(r, g, b) {
 		play_multi_sound('multiaudio7');
 		$('#nota').html("--- Sİ ---");
 	}
-	
+
 	if ((r >= 10.0 && r <= 255.0) && (g >= 10.0 && g <= 255.0) && (b >= 0.0 && b <= 280.0)) {
 		play_multi_sound('multiaudio7');
 		$('#nota').html("--- OZEL DURUM Sİ ---");
@@ -119,8 +119,8 @@ function rgbToHex(r, g, b) {
 /**
  * 1.Gelen pixellerin sadece ortalamasını al çıkan sonucu çal.
  * E = Epsilon
- * E(red)/array.size,E(green)/array.size,E(blue)/array.size 
- * 
+ * E(red)/array.size,E(green)/array.size,E(blue)/array.size
+ *
  * (Üst madde bitmeden deneme)
  * 2.Gelen arraydeki renk kodlarını aralıklara göre sınıflandır.
  * Hangi renkten kaçar tane olduklarına bak, aynı anda 2 veya 3 nota çalınabilirmi dene.
@@ -134,145 +134,147 @@ function rgbToHex(r, g, b) {
 //x,y karenin boyutu x*y
 //Neden x*x değil çünkü dikdörtgen de olsun istiyorum bütün x leri y olarak
 //değiştirmek istemedim.
-var percentage = 0;// progress bar için
+var percentage = 0;
+// progress bar için
 var noteSquence = [];
 var finish = 0;
-function findPixelRanges (pixelCalculationArray, x, y){
+function findPixelRanges(pixelCalculationArray, x, y) {
 	var red_Total = 0;
-		green_Total = 0;
-		blue_Total = 0;
+	green_Total = 0;
+	blue_Total = 0;
 	var info;
-	var dump =[];
-	
-	//Tüm arrayin içindeki rgb değerlerinin toplamları	
-	for (var i = 0; i < pixelCalculationArray.length ; i++) {
-		
+	var dump = [];
+
+	//Tüm arrayin içindeki rgb değerlerinin toplamları
+	for (var i = 0; i < pixelCalculationArray.length; i++) {
+
 		red_Total += pixelCalculationArray[i][0];
 		green_Total += pixelCalculationArray[i][1];
 		blue_Total += pixelCalculationArray[i][2];
 	};
 
-	dump.push(red_Total = red_Total / pixelCalculationArray.length);
-	dump.push(green_Total = green_Total / pixelCalculationArray.length);
-	dump.push(blue_Total = blue_Total / pixelCalculationArray.length);
-	
+	dump.push( red_Total = red_Total / pixelCalculationArray.length);
+	dump.push( green_Total = green_Total / pixelCalculationArray.length);
+	dump.push( blue_Total = blue_Total / pixelCalculationArray.length);
+
 	noteSquence.push(dump);
-	
+
 	//Ekrana bilgi yazdır.
 	info = x + "x" + y + " square's pixel average values";
-	$('#result_1').html(info + "<br>" +"RGB :" + red_Total + ", " + green_Total + ", " + blue_Total);
-	
-	if(finish == 1)
+	$('#result_1').html(info + "<br>" + "RGB :" + red_Total + ", " + green_Total + ", " + blue_Total);
+
+	if (finish == 1)
 		playNoteSequence(noteSquence);
-			
+
 }
+
 var soundWorker = new Worker('soundWorker.js');
-function playNoteSequence (notes){
+function playNoteSequence(notes) {
 	//KONTORL EETTT AQ
-	for (var i = 0; i < notes.length; i++){		
-		window.setTimeout(playSound(notes[i][0], notes[i][1], notes[i][2]),1000);		
+	for (var i = 0; i < notes.length; i++) {
+		window.setTimeout(playSound(notes[i][0], notes[i][1], notes[i][2]), 1000);
 	}
-	
+
 	//soundWorker.postMessage([notes,'hi']);
-	
+
 	//soundWorker.onmessage = function(e){
 	//	$('#textArea').val($('#textArea').val() + e.data);
 	//};
-	
+
 	finish = 0;
 }
 
 //worker denemesi için
 var myWorker;
-function findPixelSummations (){
-	
+function findPixelSummations() {
+
 	var x1 = 0;
-		y1 = 80;
-		x2 = 40; //otomatik alınacak
-		y2 = 40;		
-		pixelCalculationArray = [];
-		c = mainCanvas.getContext('2d');
+	y1 = 80;
+	x2 = 40;
+	//otomatik alınacak
+	y2 = 40;
+	pixelCalculationArray = [];
+	c = mainCanvas.getContext('2d');
 	var x_border = mainCanvas.width / x2;
-		y_border = mainCanvas.height /y2;
+	y_border = mainCanvas.height / y2;
 	var workerArray;
-		
+
 	//Web worker desteği varmı ?
-	if(typeof(Worker) !== "undefined"){
+	if ( typeof (Worker) !== "undefined") {
 		//worker tanımlı değilse worker oluştur
-		if(typeof(myWorker) == "undefined"){
+		if ( typeof (myWorker) == "undefined") {
 			myWorker = new Worker("worker.js");
 		}
-				
-		
-		
+
 		//workerdan dönen sonuç
-		myWorker.onmessage = function(e){
-			
+		myWorker.onmessage = function(e) {
+
 			$('#textArea').val($('#textArea').val() + '-');
-			findPixelRanges(e.data[0], e.data[1], e.data[2]);			
+			findPixelRanges(e.data[0], e.data[1], e.data[2]);
 		};
-		
-		for (var k = 1; k <= (mainCanvas.width/x2); k++){			
+
+		for (var k = 1; k <= (mainCanvas.width / x2); k++) {
 			workerArray = c.getImageData(x1, y1, (x2 * k), y2).data;
-			//workera gönderilen veriler		
+			//workera gönderilen veriler
 			myWorker.postMessage([workerArray, x1, y1, x2, y2, y_border, mainCanvas.width]);
-			
+
 			//Resmin tamamının tarandı bilgisi
-			if(k+1 == (mainCanvas.width/x2))
+			if (k + 1 == (mainCanvas.width / x2))
 				finish = 1;
-		}	
-	
-	}else{
+		}
+
+	} else {
 		window.alert("Browser'ın Web worker desteği yoktur.");
 	}
-	
+
 	/* Bunu SİLME
-	//terminate worker
-	w.terminate(); 
-	//make it undefined
-    w = undefined;
-    */
-	
+	 //terminate worker
+	 w.terminate();
+	 //make it undefined
+	 w = undefined;
+	 */
+
 }
+
 /*
-function findPixelSummations (){
-	var x1 = 0;
-		y1 = 0;
-		x2 = 40; //otomatik alınacak
-		y2 = 40;		
-		pixelCalculationArray = [];
-		c = mainCanvas.getContext('2d');
-	var x_border = mainCanvas.width / x2;
-		y_border = mainCanvas.height /y2;
-	var partOfAnImage;
+ function findPixelSummations (){
+ var x1 = 0;
+ y1 = 0;
+ x2 = 40; //otomatik alınacak
+ y2 = 40;
+ pixelCalculationArray = [];
+ c = mainCanvas.getContext('2d');
+ var x_border = mainCanvas.width / x2;
+ y_border = mainCanvas.height /y2;
+ var partOfAnImage;
 
-	while (y_border > 0) {
-		pixelCalculationArray = [];
-		//partOfAnImage = c.getImageData(x1, y1, x2, y2).data;
-		
-		for (var i = 0; i < x2; i++) {
-			for (var j = 0; j < y2; j++) {
-				//pixelProperties = partOfAnImage.getImageData(x1, y1, 1, 1).data;
-				pixelProperties = c.getImageData(x1, y1, 1, 1).data;
-				pixelCalculationArray.push(pixelProperties);
-				y1++;				
-			};
-			y1 = y1-y2;
-		};
+ while (y_border > 0) {
+ pixelCalculationArray = [];
+ //partOfAnImage = c.getImageData(x1, y1, x2, y2).data;
 
-		x1 = x1 + x2;
-		if(x1 + x2 == mainCanvas.width || x1 + x2 > mainCanvas.width ){
-			x1 = 0;
-			y1 = y1 + y2;
-			y_border--;
-		}
-		findPixelRanges(pixelCalculationArray, x2, y2);
-			
-		$('#textArea').html("Part " + ((x1/i)) + " Over");	
-	}//end of while
-	$('#result_1').html("x1 :" + x1 + " y1 :" + y1 );
-}
-*/
+ for (var i = 0; i < x2; i++) {
+ for (var j = 0; j < y2; j++) {
+ //pixelProperties = partOfAnImage.getImageData(x1, y1, 1, 1).data;
+ pixelProperties = c.getImageData(x1, y1, 1, 1).data;
+ pixelCalculationArray.push(pixelProperties);
+ y1++;
+ };
+ y1 = y1-y2;
+ };
+
+ x1 = x1 + x2;
+ if(x1 + x2 == mainCanvas.width || x1 + x2 > mainCanvas.width ){
+ x1 = 0;
+ y1 = y1 + y2;
+ y_border--;
+ }
+ findPixelRanges(pixelCalculationArray, x2, y2);
+
+ $('#textArea').html("Part " + ((x1/i)) + " Over");
+ }//end of while
+ $('#result_1').html("x1 :" + x1 + " y1 :" + y1 );
+ }
+ */
 
 $('#mainCanvas').mousemove(function(e) {
 	var pos = findPos(this);
@@ -287,4 +289,4 @@ $('#mainCanvas').mousemove(function(e) {
 	var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
 	$('#status').html(coord + "<br>" + hex + "<br>" + "RGB :" + p[0] + ", " + p[1] + ", " + p[2]);
 
-}); 
+});
