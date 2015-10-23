@@ -14,12 +14,17 @@
 		<audio id="multiaudio6" src="Notalar/A_la.wav" preload="auto"> </audio>
 		<audio id="multiaudio7" src="Notalar/B_si.wav" preload="auto"> </audio>
 		
-		<canvas id="mainCanvas" width= "700" height="100" style="border: 1px solid #000000;">canvas</canvas>
+		<form>
+			<td>
+				<canvas id="mainCanvas" width= "700" height="100" style="border: 1px solid #000000;">canvas</canvas>
+				<textarea id="textArea" rows="30" cols="50"></textarea>	
+			</td>	
+		</form>
 		<!--<canvas id="miniCanvas" width= "700" height="100" style="border: 1px solid #000000;">mini_canvas</canvas>-->
 		<br />
 		<input type="button" value="TEST" onclick="play_multi_sound('multiaudio1');">
 		<input id="calculate" type="button" value="Calculate" onclick="findPixelSummations();">
-		<textarea id="textArea" ></textarea>		
+		
 		
 		<div id="test1"> </div>
 		<div id="result_1"> </div>

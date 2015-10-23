@@ -48,7 +48,9 @@ function play_multi_sound(s) {
 
 function playSound(r, g, b) {
 	//TODO Kontrol edilip tüm aralıklar hesaplanacak
-
+	r = parseInt(r);
+	g = parseInt(g);
+	b = parseInt(b);
 	//DO
 	if ((r >= 128 && r <= 255) && (g >= 0 && g <= 128) && (b >= 0 && b <= 128)) {
 		play_multi_sound('multiaudio1');
@@ -83,6 +85,11 @@ function playSound(r, g, b) {
 	if ((r >= 51 && r <= 178) && (g >= 26 && g <= 153) && (b >= 76 && b <= 204)) {
 		play_multi_sound('multiaudio7');
 		$('#nota').html("--- Sİ ---");
+	}
+	
+	if ((r >= 10.0 && r <= 255.0) && (g >= 10.0 && g <= 255.0) && (b >= 0.0 && b <= 280.0)) {
+		play_multi_sound('multiaudio7');
+		$('#nota').html("--- OZEL DURUM Sİ ---");
 	}
 
 }
@@ -129,6 +136,7 @@ function rgbToHex(r, g, b) {
 //değiştirmek istemedim.
 var percentage = 0;// progress bar için
 var noteSquence = [];
+var finish = 0;
 function findPixelRanges (pixelCalculationArray, x, y){
 	var red_Total = 0;
 		green_Total = 0;
@@ -154,7 +162,24 @@ function findPixelRanges (pixelCalculationArray, x, y){
 	info = x + "x" + y + " square's pixel average values";
 	$('#result_1').html(info + "<br>" +"RGB :" + red_Total + ", " + green_Total + ", " + blue_Total);
 	
-	//playSound(red_Total, green_Total, blue_Total);	
+	if(finish == 1)
+		playNoteSequence(noteSquence);
+			
+}
+var soundWorker = new Worker('soundWorker.js');
+function playNoteSequence (notes){
+	//KONTORL EETTT AQ
+	for (var i = 0; i < notes.length; i++){		
+		window.setTimeout(playSound(notes[i][0], notes[i][1], notes[i][2]),1000);		
+	}
+	
+	//soundWorker.postMessage([notes,'hi']);
+	
+	//soundWorker.onmessage = function(e){
+	//	$('#textArea').val($('#textArea').val() + e.data);
+	//};
+	
+	finish = 0;
 }
 
 //worker denemesi için
@@ -162,15 +187,14 @@ var myWorker;
 function findPixelSummations (){
 	
 	var x1 = 0;
-		y1 = 0;
-		x2 = 2; //otomatik alınacak
-		y2 = 2;		
+		y1 = 80;
+		x2 = 40; //otomatik alınacak
+		y2 = 40;		
 		pixelCalculationArray = [];
 		c = mainCanvas.getContext('2d');
 	var x_border = mainCanvas.width / x2;
 		y_border = mainCanvas.height /y2;
 	var workerArray;
-
 		
 	//Web worker desteği varmı ?
 	if(typeof(Worker) !== "undefined"){
@@ -180,30 +204,24 @@ function findPixelSummations (){
 		}
 				
 		
+		
 		//workerdan dönen sonuç
 		myWorker.onmessage = function(e){
-			//document.getElementById("result").innerHTML = event.data;
-			//window.alert(e.data);
-			//$('#textArea').html(e.data).append();
-			$('#textArea').val($('#textArea').val() + e.data);
 			
-			//findPixelRanges(pixelCalculationArray, x2, y2);
+			$('#textArea').val($('#textArea').val() + '-');
+			findPixelRanges(e.data[0], e.data[1], e.data[2]);			
 		};
 		
-		//c yi gönderince saçmaladı
-		// canvasın kendini yollayamadım ama parçalı şekilde gidebiliyor getImage datayı alınca;
-		workerArray = c.getImageData(x1, y1, 40, 40).data;
-		
-		myWorker.postMessage([workerArray, x1, y1, x2, y2, y_border, mainCanvas.width]);
-		var dwqwdq;
-		//myWorker.postMessage(['Doğru yoldamıyım', rea]);
-		
-		
-		//worker a gönderilecek olan parametreler vs...
-		//ex: postMessage([firstData, secondData])
-		
-		//myWorker.postMessage([c, x1, y1, x2, y2, y_border, mainCanvas.width]);
-		var a = 0;
+		for (var k = 1; k <= (mainCanvas.width/x2); k++){			
+			workerArray = c.getImageData(x1, y1, (x2 * k), y2).data;
+			//workera gönderilen veriler		
+			myWorker.postMessage([workerArray, x1, y1, x2, y2, y_border, mainCanvas.width]);
+			
+			//Resmin tamamının tarandı bilgisi
+			if(k+1 == (mainCanvas.width/x2))
+				finish = 1;
+		}	
+	
 	}else{
 		window.alert("Browser'ın Web worker desteği yoktur.");
 	}
