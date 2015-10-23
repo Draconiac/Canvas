@@ -10,8 +10,8 @@ onmessage = (function(e){
 		
 	postMessage(aaa);
 */
-
-	var c = e.data[0];		
+	
+	var c = e.data[0];//Arrayin içindeki ilk 3 veri RGB 4cü Alpha için
 	var	x1 = e.data[1];	
 	var	y1 = e.data[2];	
 	var	x2 = e.data[3];	
@@ -20,36 +20,37 @@ onmessage = (function(e){
 	var	canvasWidth = e.data[6];		
 	
 	//var aaa = '---'+ c + ',' + x1 + ',' + y1 + ',' + x2 + ',' + y2 + ',' + y_border + ',' + canvasWidth;	
-			
-	while (y_border > 0) {
-		
-		pixelCalculationArray = [];			
-		for (var i = 0; i < x2; i++) {
-			
-			for (var j = 0; j < y2; j++) {
-				
+	var index = 0;	
+	var pixelCalculationArray = [];	
+	//while (y_border > 0) {		
+	//	pixelCalculationArray = [];			
+		for (var i = 0; i < x2; i++) {			
+			for (var j = 0; j < (4*y2); j+=4) {				
 				//c.getImageData workerda tanımlı değil
-				//buraya zaten array geliyor surayla okunacak okadar
-				//pixelProperties = c.getImageData(x1, y1, 1, 1).data;
-				pixelProperties = [c[i], c[i+1], c[i+2]];
-				
-				//pixelCalculationArray.push(pixelProperties);
-				pixelCalculationArray[i] = pixelProperties;				
+				//buraya zaten array geliyor
+				//pixelProperties = c.getImageData(x1, y1, 1, 1).data;								
+				pixelProperties = [c[j], c[j+1], c[j+2]];
+				pixelCalculationArray[index] = pixelProperties;	
+				//postMessage('WORKER ÇALIŞTI 3');			
+				index++; 
+				//postMessage('WORKER ÇALIŞTI 4');
 				y1++;	
-				pixelProperties =[];//bu arrayi bosaltak gerekiyor			
+				
+				pixelProperties =[];//bu arrayi bosaltak gerekiyor	
+						
 			};
-			y1 = y1-y2;	
-			
-		};
-
-		x1 = x1 + x2;
+	//		y1 = y1-y2;				
+		};		
+		postMessage([pixelCalculationArray, x2, y2]);
+	//	x1 = x1 + x2;
 		//if(x1 + x2 == mainCanvas.width || x1 + x2 > mainCanvas.width ){
-		if(x1 + x2 == canvasWidth || x1 + x2 > canvasWidth ){
-			x1 = 0;
-			y1 = y1 + y2;
-			y_border--;
-		}
-		//findPixelRanges(pixelCalculationArray, x2, y2);				
-	}//en of while
-	postMessage('WORKER ÇALIŞTI');
+	//	if(x1 + x2 == canvasWidth || x1 + x2 > canvasWidth ){
+	//		x1 = 0;
+	//		y1 = y1 + y2;
+	//		y_border--;
+	//	}
+		//findPixelRanges(pixelCalculationArray, x2, y2);
+						
+	//}//en of while
+	//postMessage('WORKER ÇALIŞTI');
 });
