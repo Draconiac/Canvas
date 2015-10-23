@@ -273,6 +273,7 @@ function findPixelSummations (){
 	$('#result_1').html("x1 :" + x1 + " y1 :" + y1 );
 }
 */
+
 $('#mainCanvas').mousemove(function(e) {
 	var pos = findPos(this);
 	var x = e.pageX - pos.x;
@@ -281,7 +282,7 @@ $('#mainCanvas').mousemove(function(e) {
 	var c = this.getContext('2d');
 	var p = c.getImageData(x, y, 1, 1).data;
 	//TEST
-	playSound(p[0], p[1], p[2]);
+	//playSound(p[0], p[1], p[2]);
 	//TEST
 	var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
 	$('#status').html(coord + "<br>" + hex + "<br>" + "RGB :" + p[0] + ", " + p[1] + ", " + p[2]);
