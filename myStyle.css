@@ -12,7 +12,7 @@ border: 1px solid black;
 height: 50px;
 width: 300px;
 background-color: white;
-margin: 0px auto;
+    margin: 1px auto;
 }
 
 #nav ul{
@@ -54,7 +54,7 @@ margin: 0px auto;
 
 #footer{
 border: 1px solid black;
-height: 40px:
+height: 40px;
 width: 700px;
 margin: 0px auto;
 }
