@@ -48,6 +48,7 @@ function play_multi_sound(s) {
     }
 }
 
+
 function playSound(r, g, b) {
     //TODO Kontrol edilip tüm aralıklar hesaplanacak
     r = parseInt(r);
