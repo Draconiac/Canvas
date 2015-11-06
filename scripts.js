@@ -4,7 +4,6 @@
 $(document).ready(function() {
 });
 var mainCanvas = document.getElementById('mainCanvas');
-//var miniCanvas = document.getElementById('miniCanvas');
 var context = mainCanvas.getContext('2d');
 
 function make_base() {
@@ -20,81 +19,6 @@ function make_base() {
         context.drawImage(base_image, 0, 0, mainCanvas.width, mainCanvas.height);
 
     });
-}
-
-// number of channels
-var channel_max = 10;
-audiochannels = [];//new Array();
-// prepare the channels
-for (var a = 0; a < channel_max; a++) {
-    audiochannels[a] =[];// new Array();
-    // create a new audio object
-    audiochannels[a]['channel'] = new Audio();
-    // expected end time for this channel
-    audiochannels[a]['finished'] = -1;
-}
-
-function play_multi_sound(s) {
-    var thistime;
-    for (a = 0; a < audiochannels.length; a++) {
-        thistime = new Date();
-        if (audiochannels[a]['finished'] < thistime.getTime()) {// is this channel finished?
-            audiochannels[a]['finished'] = thistime.getTime() + document.getElementById(s).duration * 1000;
-            audiochannels[a]['channel'].src = document.getElementById(s).src;
-            audiochannels[a]['channel'].load();
-            audiochannels[a]['channel'].play();
-            break;
-        }
-    }
-}
-
-
-function playSound(r, g, b) {
-    //TODO Kontrol edilip tüm aralıklar hesaplanacak
-    r = parseInt(r);
-    g = parseInt(g);
-    b = parseInt(b);
-    //DO
-    if ((r >= 128 && r <= 255) && (g >= 0 && g <= 128) && (b >= 0 && b <= 128)) {
-        play_multi_sound('multiaudio1');
-        $('#nota').html("--- DO ---");
-    }
-    //RE
-    if ((r >= 128 && r <= 255) && (g >= 70 && g <= 198) && (b >= 0 && b <= 128)) {
-        play_multi_sound('multiaudio2');
-        $('#nota').html("--- RE ---");
-    }
-    //Mİ
-    if ((r >= 128 && r <= 255) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)) {
-        play_multi_sound('multiaudio3');
-        $('#nota').html("--- Mİ ---");
-    }
-    //FA
-    if ((r >= 77 && r <= 204) && (g >= 102 && g <= 230) && (b >= 25 && b <= 152)) {
-        play_multi_sound('multiaudio4');
-        $('#nota').html("--- FA ---");
-    }
-    //SOL
-    if ((r >= 23 && r <= 150) && (g >= 70 && g <= 197) && (b >= 44 && b <= 171)) {
-        play_multi_sound('multiaudio5');
-        $('#nota').html("--- SOL ---");
-    }
-    //LA
-    if ((r >= 12 && r <= 163) && (g >= 12 && g <= 163) && (b >= 56 && b <= 198)) {
-        play_multi_sound('multiaudio6');
-        $('#nota').html("--- LA ---");
-    }
-    //Sİ
-    if ((r >= 51 && r <= 178) && (g >= 26 && g <= 153) && (b >= 76 && b <= 204)) {
-        play_multi_sound('multiaudio7');
-        $('#nota').html("--- Sİ ---");
-    }
-
-    if ((r >= 10.0 && r <= 255.0) && (g >= 10.0 && g <= 255.0) && (b >= 0.0 && b <= 280.0)) {
-        play_multi_sound('multiaudio7');
-        $('#nota').html("--- OZEL DURUM Sİ ---");
-    }
-
 }
 
 function findPos(obj) {
@@ -117,6 +41,62 @@ function rgbToHex(r, g, b) {
     if (r > 255 || g > 255 || b > 255)
         throw "Invalid color component";
     return ((r << 16) | (g << 8) | b).toString(16);
+}
+
+function playNoteSequence(seq){
+
+    //playSound(seq[0][0], seq[0][1], seq[0][2]);
+    for (var i = 0; i < seq.length; i++) {
+        window.setTimeout(playSound(seq[i][0], seq[i][1], seq[i][2]),2000);
+    }
+}
+
+function playSound(r, g, b) {
+    //TODO Kontrol edilip tüm aralıklar hesaplanacak
+    r = parseInt(r);
+    g = parseInt(g);
+    b = parseInt(b);
+    //DO
+    if ((r >= 128 && r <= 255) && (g >= 0 && g <= 128) && (b >= 0 && b <= 128)) {
+        playNote('do');
+        $('#nota').html("--- DO ---");
+    }
+    //RE
+    if ((r >= 128 && r <= 255) && (g >= 70 && g <= 198) && (b >= 0 && b <= 128)) {
+        playNote('re');
+        $('#nota').html("--- RE ---");
+    }
+    //Mİ
+    if ((r >= 128 && r <= 255) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)) {
+        playNote('mi');
+        $('#nota').html("--- Mİ ---");
+    }
+    //FA
+    if ((r >= 77 && r <= 204) && (g >= 102 && g <= 230) && (b >= 25 && b <= 152)) {
+        playNote('fa');
+        $('#nota').html("--- FA ---");
+    }
+    //SOL
+    if ((r >= 23 && r <= 150) && (g >= 70 && g <= 197) && (b >= 44 && b <= 171)) {
+        playNote('sol');
+        $('#nota').html("--- SOL ---");
+    }
+    //LA
+    if ((r >= 12 && r <= 163) && (g >= 12 && g <= 163) && (b >= 56 && b <= 198)) {
+        playNote('la');
+        $('#nota').html("--- LA ---");
+    }
+    //Sİ
+    if ((r >= 51 && r <= 178) && (g >= 26 && g <= 153) && (b >= 76 && b <= 204)) {
+        playNote('si');
+        $('#nota').html("--- Sİ ---");
+    }
+
+    if ((r >= 10.0 && r <= 255.0) && (g >= 10.0 && g <= 255.0) && (b >= 0.0 && b <= 280.0)) {
+        playNote('si');
+        $('#nota').html("--- OZEL DURUM Sİ ---");
+    }
+
 }
 
 /**
@@ -171,21 +151,6 @@ function findPixelRanges(pixelCalculationArray, x, y) {
 
 }
 
-//var soundWorker = new Worker('Workers/soundWorker.js');
-function playNoteSequence(notes) {
-    //KONTORL EETTT AQ
-    for (var i = 0; i < notes.length; i++) {
-        window.setTimeout(playSound(notes[i][0], notes[i][1], notes[i][2]), 1000);
-    }
-
-    //soundWorker.postMessage([notes,'hi']);
-
-    //soundWorker.onmessage = function(e){
-    //	$('#textArea').val($('#textArea').val() + e.data);
-    //};
-
-    finish = 0;
-}
 
 //worker denemesi için
 var myWorker;

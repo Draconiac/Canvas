@@ -12,14 +12,6 @@
 </head>
 <body>
 
-<audio id="multiaudio1" src="Notalar/C_do.wav" preload="auto"></audio>
-<audio id="multiaudio2" src="Notalar/D_re.wav" preload="auto"></audio>
-<audio id="multiaudio3" src="Notalar/E_mi.wav" preload="auto"></audio>
-<audio id="multiaudio4" src="Notalar/F_fa.wav" preload="auto"></audio>
-<audio id="multiaudio5" src="Notalar/G_sol.wav" preload="auto"></audio>
-<audio id="multiaudio6" src="Notalar/A_la.wav" preload="auto"></audio>
-<audio id="multiaudio7" src="Notalar/B_si.wav" preload="auto"></audio>
-
 <div id="nav">
     <ul>
         <li>
@@ -44,7 +36,7 @@
 </div>
 
 <br />
-<input type="button" value="TEST" onclick="play_multi_sound('multiaudio1');">
+<input type="button" value="TEST" onclick="playNote('sol');">
 <input id="calculate" type="button" value="Calculate" onclick="findPixelSummations();">
 
 <div id="test1"></div>
@@ -56,8 +48,11 @@
 </div>
 <div id="status"></div>
 
-<script type="text/javascript" src="jquery-2.1.4.js"></script>
-<script type="text/javascript" src="new_file.js"></script>
+<script type="text/javascript" src="Lib/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="Lib/ion.sound.min.js"></script>
+<script type="text/javascript" src="scripts.js"></script>
+<script type="text/javascript" src="soundScripts.js"></script>
+
 
 <script type="text/javascript">
 
