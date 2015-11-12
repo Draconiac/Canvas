@@ -9,7 +9,7 @@ var context = mainCanvas.getContext('2d');
 function make_base() {
     var base_image;
     base_image = new Image();
-    base_image.src = "ABC.jpg";
+    base_image.src = "Images/Test_2.jpg";
 
     base_image.crossOrigin = 'Anonymous';
     base_image.onload = (function() {
@@ -47,17 +47,22 @@ function playNoteSequence(seq){
 
     var interval;
     var i = 0;
+    var test;
     interval = setInterval(function(){
-        //for (var i = 0; i < seq.length; i++) {
-            playSound(seq[i][0], seq[i][1], seq[i][2]);
-            $('#textArea').append(seq[i][0] + ' - ' + seq[i][1] + ' - ' + seq[i][2] + '\n');
+
+            test = playSound(seq[i][0], seq[i][1], seq[i][2]);
+            if (test == 1)
+                $('#textArea').append(seq[i][0] + ' - ' + seq[i][1] + ' - ' + seq[i][2] + '\n');
+            else
+                $('#textArea').append(seq[i][0] + ' - ' + seq[i][1] + ' - ' + seq[i][2] + ' !!! '+ '\n') ;
+
             i++;
-       // }
+
             if(i >= seq.length)
                 clearInterval(interval);
     }
-    ,1000);
-    
+    ,500);
+
 }
 
 function playSound(r, g, b) {
@@ -65,47 +70,59 @@ function playSound(r, g, b) {
     r = parseInt(r);
     g = parseInt(g);
     b = parseInt(b);
+    var  test = 0;
     //DO
     if ((r >= 128 && r <= 255) && (g >= 0 && g <= 128) && (b >= 0 && b <= 128)) {
         playNote('do');
         $('#nota').html("--- DO ---");
+        test = 1;
     }
     //RE
     if ((r >= 128 && r <= 255) && (g >= 70 && g <= 198) && (b >= 0 && b <= 128)) {
         playNote('re');
         $('#nota').html("--- RE ---");
+        test = 1;
     }
     //Mİ
     if ((r >= 128 && r <= 255) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)) {
         playNote('mi');
         $('#nota').html("--- Mİ ---");
+        test = 1;
     }
     //FA
     if ((r >= 77 && r <= 204) && (g >= 102 && g <= 230) && (b >= 25 && b <= 152)) {
         playNote('fa');
         $('#nota').html("--- FA ---");
+        test = 1;
     }
     //SOL
     if ((r >= 23 && r <= 150) && (g >= 70 && g <= 197) && (b >= 44 && b <= 171)) {
         playNote('sol');
         $('#nota').html("--- SOL ---");
+        test = 1;
     }
     //LA
     if ((r >= 12 && r <= 163) && (g >= 12 && g <= 163) && (b >= 56 && b <= 198)) {
         playNote('la');
         $('#nota').html("--- LA ---");
+        test = 1;
     }
     //Sİ
     if ((r >= 51 && r <= 178) && (g >= 26 && g <= 153) && (b >= 76 && b <= 204)) {
         playNote('si');
         $('#nota').html("--- Sİ ---");
+        test = 1;
     }
 
+    return test;
+    //SADECE TEST ICIN
+    /*
     if ((r >= 10.0 && r <= 255.0) && (g >= 10.0 && g <= 255.0) && (b >= 0.0 && b <= 280.0)) {
         playNote('si');
-        $('#nota').html("--- OZEL DURUM Sİ ---");
+        //$('#nota').html("--- OZEL 6 DURUM Sİ ---");
+        //$('#nota').text("--- OZEL 6 DURUM Sİ ---");
     }
-
+    */
 }
 
 /**
@@ -145,9 +162,10 @@ function findPixelRanges(pixelCalculationArray, x, y) {
         blue_Total += pixelCalculationArray[i][2];
     }
 
-    dump.push( red_Total = red_Total / pixelCalculationArray.length);
-    dump.push( green_Total = green_Total / pixelCalculationArray.length);
-    dump.push( blue_Total = blue_Total / pixelCalculationArray.length);
+
+    dump.push(parseInt(red_Total = red_Total / pixelCalculationArray.length));
+    dump.push(parseInt(green_Total = green_Total / pixelCalculationArray.length));
+    dump.push(parseInt(blue_Total = blue_Total / pixelCalculationArray.length));
 
     noteSequence.push(dump);
 
@@ -166,9 +184,9 @@ var myWorker;
 function findPixelSummations() {
 
     var x1 = 0;
-    var y1 = 80;
-    var x2 = 40;				//otomatik alınacak
-    var y2 = 40;
+    var y1 = 0;
+    var x2 = 80;				//otomatik alınacak
+    var y2 = 80;
     var pixelCalculationArray = [];
     var c = mainCanvas.getContext('2d');
     var x_border = mainCanvas.width / x2;
@@ -187,19 +205,31 @@ function findPixelSummations() {
 
             //$('#textArea').val($('#textArea').val() + '-');
             //$('#textArea').append('+');
+
             findPixelRanges(e.data[0], e.data[1], e.data[2]);
         };
 
-        for (var k = 1; k <= (mainCanvas.width / x2); k++) {
-            workerArray = c.getImageData(x1, y1, (x2 * k), y2).data;
-            //workera gönderilen veriler
-            myWorker.postMessage([workerArray, x1, y1, x2, y2, y_border, mainCanvas.width]);
+        for (var t = 1; t <= (mainCanvas.height / y2); t++) {
+            for (var k = 1; k <= (mainCanvas.width / x2); k++) {
+                //x1 e y1 noktasından itibaren x2 ye y2 lik bir alanı al
+                workerArray = c.getImageData(x1, y1, (x2 * k), (y2 * t)).data;
+                //workera gönderilen veriler
+                myWorker.postMessage([workerArray, x1, y1, x2, y2, y_border, mainCanvas.width]);
 
-            //Resmin tamamının tarandı bilgisi
-            if (k + 1 == (mainCanvas.width / x2)) {
-                //$('#textArea').append('Done');
-                finish = 1;
+                x1 += x2;
+
+                //document.getElementById('miniContainer').style.left = (x2*(k-1))+'px';
+                //document.getElementById('miniContainer').style.top = (y2*(t-1))+'px';
+
+                var dur= 0;
+                //Resmin tamamının tarandı bilgisi
+                if (k + 1 == (mainCanvas.width / x2)) {
+                    //$('#textArea').append('Done');
+                    finish = 1;
+                }
             }
+            x1 = 0;
+            y1 += y2;
         }
 
     } else {
@@ -262,10 +292,15 @@ $('#mainCanvas').mousemove(function(e) {
     var coord = "x=" + x + ", y=" + y;
     var c = this.getContext('2d');
     var p = c.getImageData(x, y, 1, 1).data;
-    //TEST
-    //playSound(p[0], p[1], p[2]);
-    //TEST
+
     var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
     $('#status').html(coord + "<br>" + hex + "<br>" + "RGB :" + p[0] + ", " + p[1] + ", " + p[2]);
 
 });
+
+function move(){
+
+    document.getElementById('miniContainer').style.border = '2px solid red';
+    document.getElementById('miniContainer').style.left = '40px';
+    document.getElementById('miniContainer').style.top = '40px';
+}

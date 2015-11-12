@@ -52,6 +52,15 @@ position: relative;
 margin: 0px auto;
 }
 
+#miniContainer{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 80px;
+    width: 80px;
+    border: 2px solid red;
+}
+
 #footer{
 border: 1px solid black;
 height: 40px;
