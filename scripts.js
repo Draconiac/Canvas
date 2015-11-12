@@ -13,9 +13,9 @@ function make_base() {
 
     base_image.crossOrigin = 'Anonymous';
     base_image.onload = (function() {
-        mainCanvas.height = mainCanvas.width * (base_image.height / base_image.width);
-        mainCanvas.width = base_image.width * 0.5;
-        mainCanvas.height = base_image.height * 0.5;
+       // mainCanvas.height = mainCanvas.width * (base_image.height / base_image.width);
+        mainCanvas.width = base_image.width * 0.6;
+        mainCanvas.height = base_image.height * 0.6;
         context.drawImage(base_image, 0, 0, mainCanvas.width, mainCanvas.height);
 
     });
@@ -48,6 +48,9 @@ function playNoteSequence(seq){
     var interval;
     var i = 0;
     var test;
+    var ax = 0;
+    var ay = 0;
+
     interval = setInterval(function(){
 
             test = playSound(seq[i][0], seq[i][1], seq[i][2]);
@@ -57,6 +60,17 @@ function playNoteSequence(seq){
                 $('#textArea').append(seq[i][0] + ' - ' + seq[i][1] + ' - ' + seq[i][2] + ' !!! '+ '\n') ;
 
             i++;
+
+            ax += x2;
+            if(ax >= mainCanvas.width){
+                ay += y2;
+                ax = 0;
+            }
+
+
+            document.getElementById('miniContainer').style.left = ax +'px';
+            document.getElementById('miniContainer').style.top =  ay +'px';
+
 
             if(i >= seq.length)
                 clearInterval(interval);
@@ -181,17 +195,20 @@ function findPixelRanges(pixelCalculationArray, x, y) {
 
 //worker denemesi için
 var myWorker;
+var x2 = 40;				//otomatik alınacak
+var y2 = 40;
+var x_border = mainCanvas.width / x2;
+var y_border = mainCanvas.height / y2;
+
 function findPixelSummations() {
 
     var x1 = 0;
     var y1 = 0;
-    var x2 = 80;				//otomatik alınacak
-    var y2 = 80;
-    var pixelCalculationArray = [];
     var c = mainCanvas.getContext('2d');
-    var x_border = mainCanvas.width / x2;
-    var y_border = mainCanvas.height / y2;
     var workerArray;
+
+    document.getElementById('miniContainer').style.height = x2+'px';
+    document.getElementById('miniContainer').style.width = y2+'px';
 
     //Web worker desteği varmı ?
     if ( typeof (Worker) !== "undefined") {

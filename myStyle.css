@@ -56,8 +56,8 @@ margin: 0px auto;
     position: absolute;
     left: 0px;
     top: 0px;
-    height: 80px;
-    width: 80px;
+    height: 0px;
+    width: 0px;
     border: 2px solid red;
 }
 
