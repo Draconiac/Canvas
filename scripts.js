@@ -57,9 +57,7 @@ function playNoteSequence(seq){
                 clearInterval(interval);
     }
     ,1000);
-
-
-
+    
 }
 
 function playSound(r, g, b) {
