@@ -45,10 +45,21 @@ function rgbToHex(r, g, b) {
 
 function playNoteSequence(seq){
 
-    //playSound(seq[0][0], seq[0][1], seq[0][2]);
-    for (var i = 0; i < seq.length; i++) {
-        window.setTimeout(playSound(seq[i][0], seq[i][1], seq[i][2]),2000);
+    var interval;
+    var i = 0;
+    interval = setInterval(function(){
+        //for (var i = 0; i < seq.length; i++) {
+            playSound(seq[i][0], seq[i][1], seq[i][2]);
+            $('#textArea').append(seq[i][0] + ' - ' + seq[i][1] + ' - ' + seq[i][2] + '\n');
+            i++;
+       // }
+            if(i >= seq.length)
+                clearInterval(interval);
     }
+    ,1000);
+
+
+
 }
 
 function playSound(r, g, b) {
@@ -119,7 +130,7 @@ function playSound(r, g, b) {
 //değiştirmek istemedim.
 //var percentage = 0;
 // progress bar için
-var noteSquence = [];
+var noteSequence = [];
 var finish = 0;
 function findPixelRanges(pixelCalculationArray, x, y) {
     var red_Total = 0;
@@ -140,14 +151,14 @@ function findPixelRanges(pixelCalculationArray, x, y) {
     dump.push( green_Total = green_Total / pixelCalculationArray.length);
     dump.push( blue_Total = blue_Total / pixelCalculationArray.length);
 
-    noteSquence.push(dump);
+    noteSequence.push(dump);
 
     //Ekrana bilgi yazdır.
     info = x + "x" + y + " square's pixel average values";
     $('#result_1').html(info + "<br>" + "RGB :" + red_Total + ", " + green_Total + ", " + blue_Total);
 
-    if (finish == 1)
-        playNoteSequence(noteSquence);
+    //if (finish == 1)
+        //playNoteSequence(noteSequence);
 
 }
 
@@ -177,7 +188,7 @@ function findPixelSummations() {
         myWorker.onmessage = function(e) {
 
             //$('#textArea').val($('#textArea').val() + '-');
-            $('#textArea').append('+');
+            //$('#textArea').append('+');
             findPixelRanges(e.data[0], e.data[1], e.data[2]);
         };
 
@@ -187,8 +198,10 @@ function findPixelSummations() {
             myWorker.postMessage([workerArray, x1, y1, x2, y2, y_border, mainCanvas.width]);
 
             //Resmin tamamının tarandı bilgisi
-            if (k + 1 == (mainCanvas.width / x2))
+            if (k + 1 == (mainCanvas.width / x2)) {
+                //$('#textArea').append('Done');
                 finish = 1;
+            }
         }
 
     } else {
