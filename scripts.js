@@ -128,6 +128,21 @@ function playSound(r, g, b) {
         test = 1;
     }
 
+    //DO TEST
+    if ((r >= 170 && r <= 255) && (g >= 150 && g <= 255) && (b >= 130 && b <= 255)) {
+        playNote('do');
+        $('#nota').html("--- DO ---");
+        test = 1;
+    }
+
+    //RE TEST
+    if ((r >= 0 && r <= 120) && (g >= 0 && g <= 60) && (b >= 0 && b <= 60)) {
+        playNote('re');
+        $('#nota').html("--- RE ---");
+        test = 1;
+    }
+
+
     return test;
     //SADECE TEST ICIN
     /*
