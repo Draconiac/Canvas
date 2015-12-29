@@ -6,6 +6,10 @@ $(document).ready(function() {
 var mainCanvas = document.getElementById('mainCanvas');
 var context = mainCanvas.getContext('2d');
 
+var desiredWidth;
+var desiredHeight;
+var ratio;
+
 function make_base() {
     var base_image;
     base_image = new Image();
@@ -13,9 +17,16 @@ function make_base() {
 
     base_image.crossOrigin = 'Anonymous';
     base_image.onload = (function() {
-       // mainCanvas.height = mainCanvas.width * (base_image.height / base_image.width);
+       //mainCanvas.height = mainCanvas.width * (base_image.height / base_image.width);
+
+        ratio = mainCanvas.width / mainCanvas.height;
+        desiredHeight = 8;
+        desiredWidth = 8*ratio;
+
         mainCanvas.width = base_image.width * 0.6;
         mainCanvas.height = base_image.height * 0.6;
+        //mainCanvas.width = base_image.width;
+        //mainCanvas.height = base_image.height;
         context.drawImage(base_image, 0, 0, mainCanvas.width, mainCanvas.height);
 
     });
@@ -62,15 +73,14 @@ function playNoteSequence(seq){
             i++;
 
             ax += x2;
-            if(ax >= mainCanvas.width){
+            if(ax >= mainCanvas.width-40){//buraya dikkat degismesi lazım
                 ay += y2;
                 ax = 0;
             }
 
-
+            //ufak kare burda hareket ediyor
             document.getElementById('miniContainer').style.left = ax +'px';
             document.getElementById('miniContainer').style.top =  ay +'px';
-
 
             if(i >= seq.length)
                 clearInterval(interval);
@@ -333,6 +343,6 @@ $('#mainCanvas').mousemove(function(e) {
 function move(){
 
     document.getElementById('miniContainer').style.border = '2px solid red';
-    document.getElementById('miniContainer').style.left = '40px';
-    document.getElementById('miniContainer').style.top = '40px';
+    document.getElementById('miniContainer').style.left = desiredWidth+'px';
+    document.getElementById('miniContainer').style.top = desiredHeight+'px';
 }

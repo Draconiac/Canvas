@@ -1,5 +1,20 @@
+/**güncellendi 29,12,2015*/
 
-C		#FF0000		rgb(255, 0,   0)
+yeni değerler;
+
+red g4
+orange a4
+yellow a4#
+lemon b4
+green c5
+cyan c5#
+blue d5
+violet e5
+deep violet f5
+
+
+/**güncellendi 29,12,2015*/
+ C		#FF0000		rgb(255, 0,   0)
  C#		#FF4500		rgb(255, 69,  0)
  D		#FF8C00		rgb(255, 140, 0)
  D#		#FFA500		rgb(255, 165, 0)
@@ -11,7 +26,7 @@ C		#FF0000		rgb(255, 0,   0)
  A		#191970		rgb(25, 25, 112)
  A#		#8A2BE2		rgb(138, 43, 226)
  B		#663399		rgb(102, 51, 153)
- 
+
 
 /*HER NOTANIN BEYAZ DAN O NOTAYA KADAR OLAN RENK SKALASI*/
 
