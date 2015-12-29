@@ -137,14 +137,12 @@ function playSound(r, g, b) {
         $('#nota').html("--- Sİ ---");
         test = 1;
     }
-
     //DO TEST
     if ((r >= 170 && r <= 255) && (g >= 150 && g <= 255) && (b >= 130 && b <= 255)) {
         playNote('do');
         $('#nota').html("--- DO ---");
         test = 1;
     }
-
     //RE TEST
     if ((r >= 0 && r <= 120) && (g >= 0 && g <= 60) && (b >= 0 && b <= 60)) {
         playNote('re');
@@ -152,8 +150,8 @@ function playSound(r, g, b) {
         test = 1;
     }
 
-
     return test;
+
     //SADECE TEST ICIN
     /*
     if ((r >= 10.0 && r <= 255.0) && (g >= 10.0 && g <= 255.0) && (b >= 0.0 && b <= 280.0)) {
@@ -201,7 +199,6 @@ function findPixelRanges(pixelCalculationArray, x, y) {
         blue_Total += pixelCalculationArray[i][2];
     }
 
-
     dump.push(parseInt(red_Total = red_Total / pixelCalculationArray.length));
     dump.push(parseInt(green_Total = green_Total / pixelCalculationArray.length));
     dump.push(parseInt(blue_Total = blue_Total / pixelCalculationArray.length));
@@ -211,9 +208,6 @@ function findPixelRanges(pixelCalculationArray, x, y) {
     //Ekrana bilgi yazdır.
     info = x + "x" + y + " square's pixel average values";
     $('#result_1').html(info + "<br>" + "RGB :" + red_Total + ", " + green_Total + ", " + blue_Total);
-
-    //if (finish == 1)
-        //playNoteSequence(noteSequence);
 
 }
 
@@ -241,13 +235,8 @@ function findPixelSummations() {
         if ( typeof (myWorker) == "undefined") {
             myWorker = new Worker("Workers/worker.js");
         }
-
         //workerdan dönen sonuç
         myWorker.onmessage = function(e) {
-
-            //$('#textArea').val($('#textArea').val() + '-');
-            //$('#textArea').append('+');
-
             findPixelRanges(e.data[0], e.data[1], e.data[2]);
         };
 
@@ -257,18 +246,8 @@ function findPixelSummations() {
                 workerArray = c.getImageData(x1, y1, (x2 * k), (y2 * t)).data;
                 //workera gönderilen veriler
                 myWorker.postMessage([workerArray, x1, y1, x2, y2, y_border, mainCanvas.width]);
-
                 x1 += x2;
 
-                //document.getElementById('miniContainer').style.left = (x2*(k-1))+'px';
-                //document.getElementById('miniContainer').style.top = (y2*(t-1))+'px';
-
-                var dur= 0;
-                //Resmin tamamının tarandı bilgisi
-                if (k + 1 == (mainCanvas.width / x2)) {
-                    //$('#textArea').append('Done');
-                    finish = 1;
-                }
             }
             x1 = 0;
             y1 += y2;
@@ -277,13 +256,6 @@ function findPixelSummations() {
     } else {
         window.alert("Browser'ın Web worker desteği yoktur.");
     }
-
-    /* Bunu SİLME
-     //terminate worker
-     w.terminate();
-     //make it undefined
-     w = undefined;
-     */
 
 }
 
