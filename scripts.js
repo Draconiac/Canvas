@@ -13,7 +13,7 @@ var ratio;
 function make_base() {
     var base_image;
     base_image = new Image();
-    base_image.src = "Images/Test_2.jpg";
+    base_image.src = "Images/picasso.jpg";
 
     base_image.crossOrigin = 'Anonymous';
     base_image.onload = (function() {
