@@ -32,6 +32,7 @@ function make_base() {
     });
 }
 
+
 function findPos(obj) {
     var curleft = 0,
         curtop = 0;
