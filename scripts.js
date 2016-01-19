@@ -13,7 +13,7 @@ var ratio;
 function make_base() {
     var base_image;
     base_image = new Image();
-    base_image.src = "Images/picasso.jpg";
+    base_image.src = "Images/Test_1.jpg";
 
     base_image.crossOrigin = 'Anonymous';
     base_image.onload = (function() {
@@ -23,8 +23,8 @@ function make_base() {
         desiredHeight = 8;
         desiredWidth = 8*ratio;
 
-        mainCanvas.width = base_image.width * 0.6;
-        mainCanvas.height = base_image.height * 0.6;
+        mainCanvas.width = base_image.width * 0.5;
+        mainCanvas.height = base_image.height * 0.5;
         //mainCanvas.width = base_image.width;
         //mainCanvas.height = base_image.height;
         context.drawImage(base_image, 0, 0, mainCanvas.width, mainCanvas.height);
@@ -96,48 +96,48 @@ function playSound(r, g, b) {
     b = parseInt(b);
     var  test = 0;
     //DO
-    if ((r >= 128 && r <= 255) && (g >= 0 && g <= 128) && (b >= 0 && b <= 128)) {
+    if ((r >= 0 && r <= 128) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)) {
         playNote('do');
         $('#nota').html("--- DO ---");
         test = 1;
     }
     //RE
-    if ((r >= 128 && r <= 255) && (g >= 70 && g <= 198) && (b >= 0 && b <= 128)) {
+    if ((r >= 0 && r <= 128) && (g >= 0 && g <= 128) && (b >= 128 && b <= 255)) {
         playNote('re');
         $('#nota').html("--- RE ---");
         test = 1;
     }
     //Mİ
-    if ((r >= 128 && r <= 255) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)) {
+    if ((r >= 63 && r <= 190) && (g >= 0 && g <= 128) && (b >= 128 && b <= 255)) {
         playNote('mi');
         $('#nota').html("--- Mİ ---");
         test = 1;
     }
     //FA
-    if ((r >= 77 && r <= 204) && (g >= 102 && g <= 230) && (b >= 25 && b <= 152)) {
+    if ((r >= 25 && r <= 63) && (g >= 0 && g <= 0) && (b >= 51 && b <= 128)) {
         playNote('fa');
         $('#nota').html("--- FA ---");
         test = 1;
     }
     //SOL
-    if ((r >= 23 && r <= 150) && (g >= 70 && g <= 197) && (b >= 44 && b <= 171)) {
+    if ((r >= 128 && r <= 255) && (g >= 0 && g <= 128) && (b >= 0 && b <= 128)) {
         playNote('sol');
         $('#nota').html("--- SOL ---");
         test = 1;
     }
     //LA
-    if ((r >= 12 && r <= 163) && (g >= 12 && g <= 163) && (b >= 56 && b <= 198)) {
+    if ((r >= 128 && r <= 255) && (g >= 63 && g <= 190) && (b >= 0 && b <= 128)) {
         playNote('la');
         $('#nota').html("--- LA ---");
         test = 1;
     }
     //Sİ
-    if ((r >= 51 && r <= 178) && (g >= 26 && g <= 153) && (b >= 76 && b <= 204)) {
+    if ((r >= 127 && r <= 255) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)) {
         playNote('si');
         $('#nota').html("--- Sİ ---");
         test = 1;
     }
-    //DO TEST
+    /*//DO TEST
     if ((r >= 170 && r <= 255) && (g >= 150 && g <= 255) && (b >= 130 && b <= 255)) {
         playNote('do');
         $('#nota').html("--- DO ---");
@@ -148,7 +148,7 @@ function playSound(r, g, b) {
         playNote('re');
         $('#nota').html("--- RE ---");
         test = 1;
-    }
+    }*/
 
     return test;
 
