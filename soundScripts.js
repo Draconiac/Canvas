@@ -71,7 +71,7 @@ ion.sound({
     ],
 
 
-    path: "Sounds/",
+    path: "Sounds_v2/",
     multiplay: true
 });
 
