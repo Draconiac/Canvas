@@ -14,8 +14,18 @@ ion.sound({
             preload: true
         },
         {
+            alias: "do#",
+            name: "C_doDiyez",
+            preload: true
+        },
+        {
             alias: "re",
             name: "D_re",
+            preload: true
+        },
+        {
+            alias: "re#",
+            name: "D_reDiyez",
             preload: true
         },
         {
@@ -29,8 +39,18 @@ ion.sound({
             preload: true
         },
         {
+            alias: "fa#",
+            name: "F_faDiyez",
+            preload: true
+        },
+        {
             alias: "sol",
             name: "G_sol",
+            preload: true
+        },
+        {
+            alias: "sol#",
+            name: "G_solDiyez",
             preload: true
         },
         {
@@ -41,6 +61,11 @@ ion.sound({
         {
             alias: "si",
             name: "B_si",
+            preload: true
+        },
+        {
+            alias: "sib",
+            name: "Bb_si",
             preload: true
         }
     ],
@@ -56,8 +81,14 @@ function playNote(note){
         case 'do':
             ion.sound.play("do");
             break;
+        case 'do#':
+            ion.sound.play("do#");
+            break;
         case 're':
             ion.sound.play("re");
+            break;
+        case 're#':
+            ion.sound.play("re#");
             break;
         case 'mi':
             ion.sound.play("mi");
@@ -65,14 +96,23 @@ function playNote(note){
         case 'fa':
             ion.sound.play("fa");
             break;
+        case 'fa#':
+            ion.sound.play("fa#");
+            break;
         case 'sol':
             ion.sound.play("sol");
+            break;
+        case 'sol#':
+            ion.sound.play("sol#");
             break;
         case 'la':
             ion.sound.play("la");
             break;
         case 'si':
             ion.sound.play("si");
+            break;
+        case 'sib':
+            ion.sound.play("sib");
             break;
         default :
             break;

@@ -114,16 +114,28 @@ function playSound(r, g, b) {
         $('#nota').html("--- RE ---");
         test = 1;
     }
+    //RE diyez
+    if ((r >= 0 && r <= 128) && (g >= 0 && g <= 128) && (b >= 0 && b <= 128)) {
+        playNote('re#');
+        $('#nota').html("--- RE Diyez---");
+        test = 1;
+    }
     //Mİ
-    if ((r >= 63 && r <= 190) && (g >= 0 && g <= 128) && (b >= 128 && b <= 255)) {
+    if ((r >= 63 && r <= 190) && (g >= 0 && g <= 128) && (((b >= 128 && b <= 255)||(b >= 0 && b <= 128)))) {
         playNote('mi');
         $('#nota').html("--- Mİ ---");
         test = 1;
     }
-    //FA
-    if ((r >= 25 && r <= 63) && (g >= 0 && g <= 0) && (b >= 51 && b <= 128)) {
+    //FA   --G  0 - 0 dı 0 -50 yalandan yazdım
+    if ((r >= 25 && r <= 63) && (g >= 0 && g <= 50) && (b >= 51 && b <= 128)) {
         playNote('fa');
         $('#nota').html("--- FA ---");
+        test = 1;
+    }
+    //FA Diyez
+    if ((r >= 25 && r <= 63) && (g >= 0 && g <= 50) && (b >= 128 && b <= 255)) {
+        playNote('fa#');
+        $('#nota').html("--- FA Diyez---");
         test = 1;
     }
     //SOL
@@ -132,8 +144,14 @@ function playSound(r, g, b) {
         $('#nota').html("--- SOL ---");
         test = 1;
     }
+    //SOL Diyez
+    if ((r >= 128 && r <= 255) && (g >= 0 && g <= 128) && (b >= 128 && b <= 255)) {
+        playNote('sol#');
+        $('#nota').html("--- SOL Diyez---");
+        test = 1;
+    }
     //LA
-    if ((r >= 128 && r <= 255) && (g >= 63 && g <= 190) && (b >= 0 && b <= 128)) {
+    if ((r >= 128 && r <= 255) && (g >= 63 && g <= 190) && ((b >= 0 && b <= 128)||(b >= 128 && b <= 255))) {
         playNote('la');
         $('#nota').html("--- LA ---");
         test = 1;
@@ -142,6 +160,12 @@ function playSound(r, g, b) {
     if ((r >= 127 && r <= 255) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)) {
         playNote('si');
         $('#nota').html("--- Sİ ---");
+        test = 1;
+    }
+    //Sİ Bemol
+    if ((r >= 127 && r <= 255) && (g >= 128 && g <= 255) && (b >= 128 && b <= 255)) {
+        playNote('sib');
+        $('#nota').html("--- Sİ Bemol---");
         test = 1;
     }
     /*//DO TEST
