@@ -168,29 +168,9 @@ function playSound(r, g, b) {
         $('#nota').html("--- Sİ Bemol---");
         test = 1;
     }
-    /*//DO TEST
-    if ((r >= 170 && r <= 255) && (g >= 150 && g <= 255) && (b >= 130 && b <= 255)) {
-        playNote('do');
-        $('#nota').html("--- DO ---");
-        test = 1;
-    }
-    //RE TEST
-    if ((r >= 0 && r <= 120) && (g >= 0 && g <= 60) && (b >= 0 && b <= 60)) {
-        playNote('re');
-        $('#nota').html("--- RE ---");
-        test = 1;
-    }*/
 
     return test;
 
-    //SADECE TEST ICIN
-    /*
-    if ((r >= 10.0 && r <= 255.0) && (g >= 10.0 && g <= 255.0) && (b >= 0.0 && b <= 280.0)) {
-        playNote('si');
-        //$('#nota').html("--- OZEL 6 DURUM Sİ ---");
-        //$('#nota').text("--- OZEL 6 DURUM Sİ ---");
-    }
-    */
 }
 
 /**
@@ -208,11 +188,7 @@ function playSound(r, g, b) {
  * 3/4lük bir buruşun 4/4lük tam notasını kırmızı
  * 1/4lük çeyreği sarı çalsın.
  */
-//x,y karenin boyutu x*y
-//Neden x*x değil çünkü dikdörtgen de olsun istiyorum bütün x leri y olarak
-//değiştirmek istemedim.
-//var percentage = 0;
-// progress bar için
+
 var noteSequence = [];
 var finish = 0;
 function findPixelRanges(pixelCalculationArray, x, y) {
@@ -241,7 +217,6 @@ function findPixelRanges(pixelCalculationArray, x, y) {
     $('#result_1').html(info + "<br>" + "RGB :" + red_Total + ", " + green_Total + ", " + blue_Total);
 
 }
-
 
 //worker denemesi için
 var myWorker;
