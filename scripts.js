@@ -13,7 +13,7 @@ var ratio;
 function make_base() {
     var base_image;
     base_image = new Image();
-    base_image.src = "Images/Test_1.jpg";
+    base_image.src = "Images/picasso.jpg";
 
     base_image.crossOrigin = 'Anonymous';
     base_image.onload = (function() {
@@ -100,6 +100,12 @@ function playSound(r, g, b) {
     if ((r >= 0 && r <= 128) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)) {
         playNote('do');
         $('#nota').html("--- DO ---");
+        test = 1;
+    }
+    //DO diyez
+    if ((r >= 0 && r <= 128) && (g >= 128 && g <= 255) && (b >= 128 && b <= 255)) {
+        playNote('do#');
+        $('#nota').html("--- DO Diyez ---");
         test = 1;
     }
     //RE
