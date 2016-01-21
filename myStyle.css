@@ -45,11 +45,27 @@ color: red;
 }
 
 #container{
-border: 1px solid black;
-height: 650px;
-width: 700px;
-position: relative;
-margin: 0px auto;
+
+    height: auto;
+    width: 700px;
+    position: relative;
+    margin: 0px auto;
+
+}
+
+#mainC {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+
+}
+
+#textA {
+    position: absolute;
+    left: 450px;
+    top: 0px;
+    height: 0px;
+    width: 0px;
 }
 
 #miniContainer{
@@ -59,6 +75,17 @@ margin: 0px auto;
     height: 0px;
     width: 0px;
     border: 2px solid red;
+}
+
+#btt{
+    left: 0px;
+    top: 550px;
+    right: 50px;
+    position: relative;
+    height: auto;
+    width: auto;
+
+
 }
 
 #footer{

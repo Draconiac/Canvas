@@ -10,10 +10,31 @@ var desiredWidth;
 var desiredHeight;
 var ratio;
 
+var base_image;
+base_image = new Image();
+
+function previewFile(){
+    var preview = document.querySelector('img'); //selects the query named img
+    var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+    var reader  = new FileReader();
+
+    reader.onloadend = function () {
+        base_image.src = reader.result;
+    }
+
+    if (file) {
+        reader.readAsDataURL(file); //reads the data as a URL
+    } else {
+        preview.src = "";
+    }
+
+    make_base();
+}
+
 function make_base() {
-    var base_image;
-    base_image = new Image();
-    base_image.src = "Images/picasso.jpg";
+    //var base_image;
+    //base_image = new Image();
+    //base_image.src = "Images/picasso.jpg";
 
     base_image.crossOrigin = 'Anonymous';
     base_image.onload = (function() {
@@ -55,6 +76,7 @@ function rgbToHex(r, g, b) {
     return ((r << 16) | (g << 8) | b).toString(16);
 }
 
+
 function playNoteSequence(seq){
 
     var interval;
@@ -67,7 +89,7 @@ function playNoteSequence(seq){
 
             test = playSound(seq[i][0], seq[i][1], seq[i][2]);
             if (test == 1)
-                $('#textArea').append(seq[i][0] + ' - ' + seq[i][1] + ' - ' + seq[i][2] + '\n');
+                $('#textArea').append('('+seq[i][0] + ' ,' + seq[i][1] + ' ,' + seq[i][2] +')' +'\n');
             else
                 $('#textArea').append(seq[i][0] + ' - ' + seq[i][1] + ' - ' + seq[i][2] + ' !!! '+ '\n') ;
 
@@ -100,72 +122,84 @@ function playSound(r, g, b) {
     if ((r >= 0 && r <= 128) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)) {
         playNote('do');
         $('#nota').html("--- DO ---");
+        $('#textArea').append(" DO ->");
         test = 1;
     }
     //DO diyez
     if ((r >= 0 && r <= 128) && (g >= 128 && g <= 255) && (b >= 128 && b <= 255)) {
         playNote('do#');
         $('#nota').html("--- DO Diyez ---");
+        $('#textArea').append(" DO Diyez ->");
         test = 1;
     }
     //RE
     if ((r >= 0 && r <= 128) && (g >= 0 && g <= 128) && (b >= 128 && b <= 255)) {
         playNote('re');
         $('#nota').html("--- RE ---");
+        $('#textArea').append(" RE ->");
         test = 1;
     }
     //RE diyez
     if ((r >= 0 && r <= 128) && (g >= 0 && g <= 128) && (b >= 0 && b <= 128)) {
         playNote('re#');
         $('#nota').html("--- RE Diyez---");
+        $('#textArea').append(" RE Diyez ->");
         test = 1;
     }
     //Mİ
-    if ((r >= 63 && r <= 190) && (g >= 0 && g <= 128) && (((b >= 128 && b <= 255)||(b >= 0 && b <= 128)))) {
+    if ((r >= 63 && r <= 190) && (g >= 0 && g <= 128) && (((b >= 128 && b <= 255)))){//||(b >= 0 && b <= 128)))) {
         playNote('mi');
         $('#nota').html("--- Mİ ---");
+        $('#textArea').append(" Mİ ->");
         test = 1;
     }
     //FA   --G  0 - 0 dı 0 -50 yalandan yazdım
     if ((r >= 25 && r <= 63) && (g >= 0 && g <= 50) && (b >= 51 && b <= 128)) {
         playNote('fa');
         $('#nota').html("--- FA ---");
+        $('#textArea').append(" FA ->");
         test = 1;
     }
     //FA Diyez
     if ((r >= 25 && r <= 63) && (g >= 0 && g <= 50) && (b >= 128 && b <= 255)) {
         playNote('fa#');
         $('#nota').html("--- FA Diyez---");
+        $('#textArea').append(" FA Diyez ->");
         test = 1;
     }
     //SOL
     if ((r >= 128 && r <= 255) && (g >= 0 && g <= 128) && (b >= 0 && b <= 128)) {
         playNote('sol');
         $('#nota').html("--- SOL ---");
+        $('#textArea').append(" SOL ->");
         test = 1;
     }
     //SOL Diyez
     if ((r >= 128 && r <= 255) && (g >= 0 && g <= 128) && (b >= 128 && b <= 255)) {
         playNote('sol#');
         $('#nota').html("--- SOL Diyez---");
+        $('#textArea').append(" SOL Diyez ->");
         test = 1;
     }
     //LA
     if ((r >= 128 && r <= 255) && (g >= 63 && g <= 190) && ((b >= 0 && b <= 128)||(b >= 128 && b <= 255))) {
         playNote('la');
         $('#nota').html("--- LA ---");
+        $('#textArea').append(" LA ->");
         test = 1;
     }
     //Sİ
     if ((r >= 127 && r <= 255) && (g >= 128 && g <= 255) && (b >= 0 && b <= 128)) {
         playNote('si');
         $('#nota').html("--- Sİ ---");
+        $('#textArea').append(" Sİ ->");
         test = 1;
     }
     //Sİ Bemol
     if ((r >= 127 && r <= 255) && (g >= 128 && g <= 255) && (b >= 128 && b <= 255)) {
         playNote('sib');
         $('#nota').html("--- Sİ Bemol---");
+        $('#textArea').append(" Sİ Bemol ->");
         test = 1;
     }
 
@@ -232,8 +266,8 @@ function findPixelSummations() {
     var c = mainCanvas.getContext('2d');
     var workerArray;
 
-    document.getElementById('miniContainer').style.height = x2+'px';
-    document.getElementById('miniContainer').style.width = y2+'px';
+    document.getElementById('miniContainer').style.height =  x2+'px';
+    document.getElementById('miniContainer').style.width =   y2+'px';
 
     //Web worker desteği varmı ?
     if ( typeof (Worker) !== "undefined") {
@@ -265,46 +299,6 @@ function findPixelSummations() {
 
 }
 
-/*
- function findPixelSummations (){
- var x1 = 0;
- y1 = 0;
- x2 = 40; //otomatik alınacak
- y2 = 40;
- pixelCalculationArray = [];
- c = mainCanvas.getContext('2d');
- var x_border = mainCanvas.width / x2;
- y_border = mainCanvas.height /y2;
- var partOfAnImage;
-
- while (y_border > 0) {
- pixelCalculationArray = [];
- //partOfAnImage = c.getImageData(x1, y1, x2, y2).data;
-
- for (var i = 0; i < x2; i++) {
- for (var j = 0; j < y2; j++) {
- //pixelProperties = partOfAnImage.getImageData(x1, y1, 1, 1).data;
- pixelProperties = c.getImageData(x1, y1, 1, 1).data;
- pixelCalculationArray.push(pixelProperties);
- y1++;
- };
- y1 = y1-y2;
- };
-
- x1 = x1 + x2;
- if(x1 + x2 == mainCanvas.width || x1 + x2 > mainCanvas.width ){
- x1 = 0;
- y1 = y1 + y2;
- y_border--;
- }
- findPixelRanges(pixelCalculationArray, x2, y2);
-
- $('#textArea').html("Part " + ((x1/i)) + " Over");
- }//end of while
- $('#result_1').html("x1 :" + x1 + " y1 :" + y1 );
- }
- */
-
 $('#mainCanvas').mousemove(function(e) {
     var pos = findPos(this);
     var x = e.pageX - pos.x;
@@ -321,6 +315,6 @@ $('#mainCanvas').mousemove(function(e) {
 function move(){
 
     document.getElementById('miniContainer').style.border = '2px solid red';
-    document.getElementById('miniContainer').style.left = desiredWidth+'px';
-    document.getElementById('miniContainer').style.top = desiredHeight+'px';
+    document.getElementById('miniContainer').style.left =  desiredWidth+'px';
+    document.getElementById('miniContainer').style.top =   desiredHeight+'px';
 }
